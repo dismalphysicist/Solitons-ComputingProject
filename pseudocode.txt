@@ -1,0 +1,26 @@
+### Milestone Project Pseudo-Code ###
+
+V = diffracting potential #as yet unknown 
+
+def fourier_transform(f):
+	F=F(f)
+	return F
+	
+def inverse_fourier(F):
+	f=F^-1(F)
+	return f
+
+def gaussian-analytical:
+	solve S.E. analytically for Gaussian in diffracting potential 
+	wf = numpy.array(x,t,psi) #array of wavefunctions at each time and space point
+	return wf
+	
+def schrodinger_time_evolution(psi_initial, V_additional):
+	V_total = V + V_additional #total potential	
+	psi = psi_initial
+	
+	for all time points t + dt:
+		array[i] = psi
+		psi = exp(-iVdt/2) inverse_fourier(exp(-ik^2dt) fourier_transform(exp(-iVdt/2) psi))
+	
+	
