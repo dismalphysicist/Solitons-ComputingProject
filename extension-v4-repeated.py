@@ -120,11 +120,11 @@ pyplot.title("Relative phase " + r'$\pi$')
 pyplot.savefig("extension-v4-pic.png")
 pyplot.show() 
 
-pyplot.figure()
-pyplot.imshow(np.transpose(schrodinger_time_evolution(soliton(0,0,0,family_param), V, -4*family_param)), extent=(-20,20,0,40), origin='lower', cmap='viridis')
-pyplot.title("Harmonic potential on one soliton")
-pyplot.savefig("harmonic_confinement-1soliton.png")
-pyplot.show()
+# pyplot.figure()
+# pyplot.imshow(np.transpose(schrodinger_time_evolution(soliton(0,0,0,family_param), V, -4*family_param)), extent=(-20,20,0,40), origin='lower', cmap='viridis')
+# pyplot.title("Harmonic potential on one soliton")
+#pyplot.savefig("harmonic_confinement-1soliton.png")
+# pyplot.show()
 
 #solitons should reach the same point outwards each time - why are they not? why are they losing energy? 
 #try increasing space range - might be going too close to the edge 
