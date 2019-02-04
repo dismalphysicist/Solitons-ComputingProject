@@ -87,6 +87,7 @@ family_param = 2
 rel_phase1 = 0
 rel_phase2 = np.pi
 
+#weak axial harmonic confining potential (assume radial confinement perfect, so 1D motion)
 w = 2*np.pi/4
 mws = 1*w**2 #m w^2 characterises strength of harmonic potential 
 V = 1/2 * mws * xs**2
@@ -99,25 +100,34 @@ velocity = 10 #L/2 originally
 harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, -4*family_param) 
 harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, -4*family_param) 
 
+difference = harmPot - harmPotPi
+
 
 ########## PLOTS ############
 pyplot.figure(figsize=(10,6))
 pyplot.suptitle("Weak Harmonic Confining Potential")
 
-pyplot.subplot(121)
+pyplot.subplot(131)
 pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='jet') 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 
-pyplot.subplot(122)
+pyplot.subplot(132)
 pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='jet') 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 #pyplot.title("Relative phase {}".format(rel_phase2))
 pyplot.title("Relative phase " + r'$\pi$')
 
-pyplot.savefig("extension-v4-pic.png")
+pyplot.subplot(133)
+pyplot.plot(difference[:,3240])
+pyplot.xlabel("Space")
+pyplot.title("Difference at t=16.2")
+pyplot.savefig('difference.png')
+
+
+#pyplot.savefig("extension-v4-pic.png")
 pyplot.show() 
 
 # pyplot.figure()
@@ -125,6 +135,3 @@ pyplot.show()
 # pyplot.title("Harmonic potential on one soliton")
 #pyplot.savefig("harmonic_confinement-1soliton.png")
 # pyplot.show()
-
-#solitons should reach the same point outwards each time - why are they not? why are they losing energy? 
-#try increasing space range - might be going too close to the edge 

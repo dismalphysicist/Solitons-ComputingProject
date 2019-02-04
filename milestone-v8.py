@@ -52,7 +52,6 @@ xs = np.linspace(-10, 10, n_times)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_times
 
-family_param = 1
 
 
 #generate initial psi
@@ -74,6 +73,7 @@ def accuracy_test(g_test,t):
     return accuracy
 
 #tests
+family_param = 1
 velocity = (L/6)/2
 testpsi = schrodinger_time_evolution(soliton(velocity), 0, 0) #no nonlinear term 
 g_test = -0.025
@@ -81,7 +81,7 @@ g_test2 = -4*family_param
 testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear interactions 
 
 #testing accuracy
-acc = accuracy_test(g_test, 1.999)
+acc = accuracy_test(g_test2, 1.999)
 print "Norm is conserved to {} % accuracy".format(acc) 
 
 #to compare to analytic, use gaussian first. later, sech soliton and nonlinear. 
