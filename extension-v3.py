@@ -120,7 +120,7 @@ pyplot.title("Relative phase {}".format(rel_phase2))
 pyplot.subplot(233)
 pyplot.plot(difference1[:,900])
 pyplot.xlabel("Space")
-pyplot.xticks(np.array([0,500,100,1500,2000]),[-10.0,-5.0,0,5.0,10.0])
+pyplot.xticks(np.array([0,500,1000,1500,2000]),[-10.0,-5.0,0.0,5.0,10.0])
 pyplot.title("Difference at t=9")
 #pyplot.savefig('difference.png')
 

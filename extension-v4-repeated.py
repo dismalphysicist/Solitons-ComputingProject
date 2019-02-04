@@ -82,7 +82,7 @@ def accuracy_test(g_test,t):
 
 ######### TESTS #########
 
-family_param = 2
+family_param = 3
 
 rel_phase1 = 0
 rel_phase2 = np.pi
@@ -104,25 +104,28 @@ difference = harmPot - harmPotPi
 
 
 ########## PLOTS ############
-pyplot.figure(figsize=(10,6))
-pyplot.suptitle("Weak Harmonic Confining Potential")
+pyplot.figure(figsize=(18,5))
+#pyplot.suptitle("Weak Harmonic Confining Potential")
 
 pyplot.subplot(131)
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='jet') 
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 
 pyplot.subplot(132)
-pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='jet') 
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 #pyplot.title("Relative phase {}".format(rel_phase2))
 pyplot.title("Relative phase " + r'$\pi$')
 
 pyplot.subplot(133)
-pyplot.plot(difference[:,3240])
+pyplot.plot(difference[:,3240], color="#000099")
 pyplot.xlabel("Space")
+pyplot.xticks(np.array([0,1000,2000,3000,4000]),[-20.0,-10.0,0.0,10.0,20.0])
+pyplot.ylabel("Difference in " + r'$\psi^2$' + "   " + r'$/10^{-5}$')
+pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
 pyplot.title("Difference at t=16.2")
 pyplot.savefig('difference.png')
 
