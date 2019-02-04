@@ -67,6 +67,8 @@
 \newtheorem{definition}{Definition}[section]
 \newtheorem{exmp}{Example}[section]
 \newtheorem*{theorem*}{Theorem}
+\DeclareMathOperator{\sech}{sech}		% Defining sech so it doesn't italicise it 
+\DeclareMathOperator{\Int}{Int}		% Defining 'integer part of' so it doesn't italicise it 
 
 \setlength\columnsep{10mm}  %%%% column separation
 
@@ -79,23 +81,27 @@
 %\tikz[remember picture,overlay] \node[inner sep=0pt] at (current page.center)
 %{ \includegraphics[width=\paperwidth,height=\paperheight]{spiral3.pdf}};
 
-%\begin{tikzpicture}[remember picture, overlay]
-%  \node [anchor=north west, inner sep=1cm]  at (current page.north west)
-%     {\includegraphics[height=3cm]{university}};
-%\end{tikzpicture}
+\begin{tikzpicture}[remember picture, overlay]
+  \node [anchor=north west, inner sep=1cm]  at (current page.north west)
+     {\includegraphics[height=3cm]{university}};
+\end{tikzpicture}
 \hfill
-\cBoX{0.6}{\centering
+\cBoX{0.75}{\centering
 \vspace{1ex}
-{\fontsize{1.8cm}{2cm}\selectfont{\textsc{Solitons in a Bose-Einstein Condensate}}}
-\vspace{1ex}
-}{white}{white}
-\hfill
-\cBoX{.3}{\color{black}
-\centering
+{\fontsize{1.8cm}{2cm}\selectfont{\textsc{Solitons in a Bose-Einstein Condensate \\}}}
 \huge
 \textsc{L P Flower\\
 Project Tutor: Dr. Rahul Sawant}
+\vspace{1ex}
 }{white}{white}
+\hfill
+%\cBoX{.3}{\color{black}
+%\centering
+%\huge
+%\textsc{L P Flower\\
+%Project Tutor: \\
+%Dr. Rahul Sawant}
+%}{white}{white}
 \vspace{0.5in} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,63 +124,32 @@ Project Tutor: Dr. Rahul Sawant}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \fboxsep=5.5pt
+
 \cBOX{0.97}{\section*{Introduction}
-\fontsize{
-Interacting Particle Systems is an area of Probability, that spans several fields of study. 
-Typically one starts with a countable number of particles, which would evolve as independent 
-Markov chains on some countable state space $I$, and imposes a local interaction between 
-these particles. This means that the evolution of an individual particle on $I$ no longer has the 
-Markov property. Understanding how these systems develops over time is now much more 
-involved.
-\vspace{1ex}
+{
+\fontsize{16pt}{20pt}\selectfont
+The atoms in a Bose-Einstein condensate are all described by the same wavefunction, since they are in the same quantum state, which includes each atom's interaction with the other atoms in the condensate. Introducing an pseudopotential term $g \abs{\psi}^2$ which characterises the interactions between the particles into the dimensionless Schr\"{o}dinger equation yields the Gross-Pitaevskii equation \cite{}
+\begin{equation}
+i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + (V + g \abs{\psi}^2) \psi,
+\end{equation}
+where $\psi$ is the atomic wavefunction, $t$ and $x$ are the rescaled time and length variables, $V$ is the external potential (if present) and $g$ is the interaction parameter. 
 
-While the motivation for Interacting Particle Systems initially came from problems in 
-statistical mechanics and from trying to understand phase transition, the area is now 
-widely applicable to other areas such as population evolution, modelling infections, 
-modelling computer viruses, and behavioural systems.
-\vspace{1ex}
+It is usual to define $\zeta$ as a parameter to characterise width, with units of inverse length. The normalised wavefunction is then
+\begin{equation} 
+\psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i v x + \phi},
+\end{equation}
+where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
+Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=4\zeta$. 
 
-We consider continuous time Markov processes, denoted $\eta_{t}$, in a state space 
-$S=\{0,1\}^{I}$ where $I$ is the countable collection of sites. The interpretation of the values 
-$0,1$ changes for various models, for example they could denote whether a particle occupies 
-a particular site. The dynamics of these processes are specified by transition 
-rates between states.
-\vspace{1ex}
+\section*{Propagating a Soliton}
 
-}{white}{white}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\vspace{-0.5cm}
-\cBOX{0.97}{\section*{Processes and Models}
-There are lots of different types of processes and models, such as the Richardson growth
-model, the contact process, the voter model and the exclusion process. The interactions on
-these models can lead to some surprising behaviour. In particular we will concentrate on the
-behaviours of the Richardson growth model and the voter model when the set of sites 
-$I = \mathbb{Z}^{d}$.
-
+The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method \cite{}. 
 
 \begin{center}
 \includegraphics[scale=0.5]{milestonepic.png}
 \captionof{figure}{$n=50$, $p=0.6$}
 \end{center}
 
-\subsection*{Contact Process}
-We consider an undirected $G=(V,E)$ whose vertices have bounded degrees. For the contact process on 
-a graph with parameter $\lambda$ on $G$ we take $I=V$. Each vertex represents an individual, which we call 
-infected if $\eta_{t}(x)=$ and healthy if $\eta_{t}(x)=0$. Infected individuals recover independently at rate $1$
-and infect neighbouring healthy vertices at a rate $\lambda$. This gives the following rate function
-\begin{equation*}
-c(x, \eta)=
-\begin{cases}
-1 & \mbox{ if } \eta(x)=1\\
-\lambda \sum_{y: |x-y|=1}\eta(y) & \mbox{ if } \eta(x)=0
-\end{cases}
-\end{equation*}
-The contact process can be used to model things like infections in populations, and the spread of computer
-viruses. If the graph is finite the infection will die off almost surely, but we can ask questions about the 
-survival time of the process under various conditions. We can also ask questions about the long time 
-behaviour of the process on infinite graphs such as lattices.
 
 %\subsection*{Exclusion Process}
 %The exclusion process is slightly different from the previous processes. Here two coordinates of $\eta_{t}$
@@ -186,6 +161,7 @@ behaviour of the process on infinite graphs such as lattices.
 %	\item[(c)] If $y$ is vacant at that time, the particle moves to $y$, otherwise it remains at $x$.
 %\end{itemize}
 %Once again $\eta(x)=1$ corresponds to occupation and $\eta(x)=0$ corresponds to vacancy.
+}
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -308,6 +284,7 @@ Colouring only the boundary, we can see the shape of the rescaled set of occupie
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\columnbreak
 \cBOX{0.97}{
 \subsection*{The two-type Richardson growth model}
 For two different types of particles, type I and type II, on $\mathbb{Z}^{d}$ we define the two-type
@@ -334,19 +311,11 @@ the probability that both sets of occupied sites can grow to be infinite is $0$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\columnbreak
-\cBOX{0.97}{\section*{Voter Model}
-To each $ x \in \mathbb{Z}^{d}$ we attach independent Poisson processes $T_{n}^{x}$ of rate $1$, and 
-let $Y_{n}^{x}$ be independent i.i.d. sequences, with $P(Y_{n}^{x}=y)=1/2d$ for all $y$ with $\abs{y}=1$.
-The individual $x$ changes their opinion for the nth time at time $T_{n}^{x}$ to that of $x+Y_{n}^{x}$.
-The process can be represented graphically on $\mathbb{Z}^{d}\times[0,\infty)$ by drawing arrows
-from $(x+Y_{n}^{x},T_{n}^{x})$ to $(x,T_{n}^{x})$, and we also write a $\delta$ at $(x,T_{n}^{x})$
-for each $x$ and $n$. 
-\vspace{1ex}
+\cBOX{0.97}{\section*{Repeated Collisions}
 
 %\sidebyside{
 \begin{center}
-\includegraphics[scale=0.6]{extension-v4-pic.png}
+\includegraphics[width=\columnwidth]{difference.png}
 \captionof{figure}{$n=50$, $p=0.6$}
 \end{center}
 %}
@@ -354,18 +323,6 @@ for each $x$ and $n$.
 %the opinion of individual $0$ at time $t$ is the same as that of individual $-2$ 
 %at time $0$, and if we set $A=\{-2\}$ we get that $\xi_{t}^{\{-2\}}=\{-3,-2,-1,0\}$.
 
-\subsection*{Limiting distributions}
-It is easy to see that $\eta \equiv 0$ and $ \eta \equiv 1$ are invariant for the process, as if all
-individuals are of the same opinion, nobody can change. However it is not clear that the 
-process has other invariant extremal measures.
-The trick here is to relate our dual process to a simple random walk, 
-which is recurrent in dimension $d=1,2$ and transient for $d \geq 3$. 
-\vspace{1ex}
-
-From this we can obtain that the voter model on $\mathbb{Z}^{d}$
-reaches a consensus for $d \leq 2$, but for $d \geq 3$ we get a family of limiting distributions. In particular
-we get a different limiting distribution for every $p \in [0,1]$ if we start from an initial configuration 
-which puts $\eta_{0}(x)=1$ with probability $p$, i.e. the product measure with density $p$.
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -401,23 +358,6 @@ c(x, \eta)=
 0 & \mbox{ otherwise.}
 \end{cases}
 \end{equation*}
-This essentially gives that individuals have an area of effect on the opinions of neighbouring individuals.
-While this seems like a minor extension its behaviour can be strange, even in $d=1$. 
-For example it is possible for the system to get trapped in a non-trivial extremal measure in the sense that, 
-starting from any initial configuration, each $x \in \mathbb{Z}$ will only change its opinion finitely many times.
-In the case we say that the process fixates.
-If we consider $\mathcal{N}=\{-1,0,1\}$ and $T=2$, the system can become trapped in
-$$ \cdots \phantom{Z} 1 \phantom{Z} 1 \phantom{Z} 0 \phantom{Z} 0 \phantom{Z} 1 \phantom{Z} 1
-\phantom{Z} 0\phantom{Z} 0\phantom{Z} 1\phantom{Z} 1\phantom{Z} 0\phantom{Z} 0  \phantom{Z} \cdots $$
-More generally if $\eta_{t}(x) = \eta_{t}(x+1)$ then these two individuals have the same opinion for all 
-future times. In contrast this situation does not arise in linear voter models. In particular
-
-$$ \mbox{ the process fixates when }T > \frac{\#\mathcal{N}-1}{2}$$
-
-In one dimension, if any interval of length $T$ is constant at any time, then individuals
-in the interval will never change their opinion, so it is easy to see why it fixates in this case.
-In fact for dimension one, when $\mathcal{N}=\{-T,\cdots,T\}$, the limiting distributions are given 
-by consensus.
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -428,13 +368,6 @@ Each of the models presented here can be studied in greater generality, for
 various index sets $I$. There are many results for processes taking $I=V$ for 
 some vertex set $V$ of a connected undirected graph $G=(V,E)$, whose
 vertices have bounded degrees.
-\vspace{1ex}
-
-The behaviours of many models, even simple ones such as the Richardson
-growth model, can have some very non-trivial properties. While there are 
-lots of known results for these models, small changes in the local dynamics 
-can lead to completely different global behaviours, which are often difficult
-to understand.
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -443,8 +376,6 @@ to understand.
 \cBOX{0.97}{
 
 \begin{thebibliography}{}
-
-\bibitem{Russell} J. Scott Russell (1844), "Report on Waves", \textit{Report of British Association for the Advancement of Science} pp. 311-390. 
 
 \bibitem{KdV} D. J. Korteweg and G. de Vries (1895), "On the Change of Form...", \textit{Philosophical Magazine} \textbf{39}(240) pp. 422-443.
 
