@@ -87,7 +87,7 @@ print "Norm is conserved to {} % accuracy".format(acc)
 #to compare to analytic, use gaussian first. later, sech soliton and nonlinear. 
 
 pyplot.figure(figsize=(10,6)) 
-pyplot.suptitle("The effect of inter-atom interactions " + r'$g |\psi|^2$' + " on a soliton model", fontsize=16)	
+#pyplot.suptitle("The effect of inter-atom interactions " + r'$g |\psi|^2$' + " on a soliton model", fontsize=16)	
 
 pyplot.subplot(121)
 pyplot.imshow(np.transpose(testpsi), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
@@ -103,5 +103,3 @@ pyplot.title(r'$g= {}$'.format(g_test2))
 
 pyplot.savefig('milestonepic.png')
 pyplot.show()
-# colorbar(mod(psi_whichever)^2, (0,1), black and white) #show probability as black/white gradient from 0 to 1
-

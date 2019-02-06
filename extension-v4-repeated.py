@@ -7,6 +7,7 @@ Version 5
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pyplot
+import matplotlib.colors as colors 
 
 ############ FUNCTIONS #############
 
@@ -82,7 +83,8 @@ def accuracy_test(g_test,t):
 
 ######### TESTS #########
 
-family_param = 3
+g = -12
+family_param = -g/4
 
 rel_phase1 = 0
 rel_phase2 = np.pi
@@ -97,8 +99,8 @@ V = 1/2 * mws * xs**2
 
 velocity = 20 #L/2 originally 
 
-harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, -4*family_param) 
-harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, -4*family_param) 
+harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
+harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, g) 
 
 difference = harmPot - harmPotPi
 
@@ -107,14 +109,16 @@ difference = harmPot - harmPotPi
 pyplot.figure(figsize=(18,5))
 #pyplot.suptitle("Weak Harmonic Confining Potential")
 
+
+
 pyplot.subplot(131)
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.05, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 
 pyplot.subplot(132)
-pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.05, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 #pyplot.title("Relative phase {}".format(rel_phase2))
