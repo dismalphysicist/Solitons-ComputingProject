@@ -83,7 +83,7 @@ def accuracy_test(g_test,t):
 
 ######### TESTS #########
 
-g = -12
+g = -5
 family_param = -g/4
 
 rel_phase1 = 0
@@ -112,13 +112,13 @@ pyplot.figure(figsize=(18,5))
 
 
 pyplot.subplot(131)
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.05, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 
 pyplot.subplot(132)
-pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.05, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 #pyplot.title("Relative phase {}".format(rel_phase2))
@@ -130,15 +130,15 @@ if velocity == 10:
     t=16
     pyplot.plot(difference[:,3200], color="#000099")
 elif velocity == 20:
-    t=15
-    pyplot.plot(difference[:,3000], color="#000099")
+    t=15.16
+    pyplot.plot(difference[:,3032], color="#000099")
 pyplot.xlabel("Space")
 pyplot.xticks(np.array([0,1000,2000,3000,4000]),[-20.0,-10.0,0.0,10.0,20.0])
 #pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
 #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
 pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
 
-pyplot.savefig('difference-20.png')
+pyplot.savefig('difference-g5.png')
 
 
 #pyplot.savefig("extension-v4-pic.png")
