@@ -53,7 +53,7 @@ n_points = 4000 #number of x steps
 n_times = 4000 #number of timesteps
 dt = 0.001
 ts = np.linspace(0,20,n_times) #only for phase 
-xs = np.linspace(-30, 30, n_points)
+xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
 
@@ -97,7 +97,7 @@ V = 1/2 * mws * xs**2
 #zeroPot = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase1,0.5), 0, g) 
 #zeroPotPi = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase2,0.5), 0, g) 
 
-velocity = 20 #L/2 originally 
+velocity = 10 #L/2 originally 
 
 harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
 harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, g) 
@@ -112,13 +112,15 @@ pyplot.figure(figsize=(18,5))
 
 
 pyplot.subplot(131)
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
+#, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 
 pyplot.subplot(132)
-pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())) 
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis')
+#, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()) 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 #pyplot.title("Relative phase {}".format(rel_phase2))
