@@ -90,7 +90,7 @@
 \vspace{1ex}
 {\fontsize{1.8cm}{2cm}\selectfont{\textsc{Solitons in a Bose-Einstein Condensate \\}}}
 \huge
-\textsc{L P Flower\\
+\textsc{Lois P Flower\\ %L P Flower? 
 Project Tutor: Dr. Rahul Sawant}
 \vspace{1ex}
 }{white}{white}
@@ -125,7 +125,7 @@ Project Tutor: Dr. Rahul Sawant}
 
 \fboxsep=5.5pt
 
-\cBOX{0.97}{\section*{Introduction}
+\cBOX{0.97}{\section*{{\fontsize{28pt}{35pt}\selectfont Introduction}}
 {
 \fontsize{16pt}{20pt}\selectfont
 The atoms in a Bose-Einstein condensate are all described by the same wavefunction, since they are in the same quantum state, which includes each atom's interaction with the other atoms in the condensate. Introducing an pseudopotential term $g \abs{\psi}^2$ which characterises the interactions between the particles into the dimensionless Schr\"{o}dinger equation yields the Gross-Pitaevskii equation \cite{}
@@ -141,86 +141,47 @@ It is usual to define $\zeta$ as a parameter to characterise width, with units o
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
 Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=4\zeta$. 
 
-\section*{Propagating a Soliton}
+\section*{{\fontsize{28pt}{35pt}\selectfont Propagating a Soliton}}
 
 The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$ from 0 to either 20 or 40 [UNITS]. The box length used was initially 20 [UNITS], which was increased to 40 for repeated soliton collisions. [put in repeated collisions section?] A box length of 20 meant that a single soliton could have a velocity of up to 5 [UNITS] in the limit of zero width up to $t=20$, without boundary effects causing unrealistic distortion. 4000 space points and 4000 time points were used to minimise discretization effects. 
 
 \begin{center}
-\includegraphics[scale=0.5]{milestonepic.png}
-\captionof{figure}{$n=50$, $p=0.6$}
+\includegraphics[width=\columnwidth]{milestonepic.png}
+\captionof{figure}{A graph showing the effect of inter-atom interactions $g \abs{\psi^2}$ on a soliton model.}
 \end{center}
 }
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\cBOX{0.97}{
-}{white}{white}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \columnbreak
-\cBOX{0.97}{\subsection*{}
-}{white}{white}
+\cBOX{0.97}{\section*{{\fontsize{28pt}{35pt}\selectfont Soliton Collisions}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\cBOX{0.97}{
-}{white}{white}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\cBOX{0.97}{
 \begin{center}
 \includegraphics[width=\columnwidth]{extensionpic.png}
 \captionof{figure}{Caption}
 \end{center}
-{
-\hspace{6ex}
-%\includegraphics[scale=0.30]{pic1.png}
-%\captionof{figure}{$n=200$, $p=0.1$}
-}
+
+
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \columnbreak
-\cBOX{0.97}{
-}{white}{white}
+\cBOX{0.97}{\section*{{\fontsize{28pt}{35pt}\selectfont Repeated Collisions}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\fontsize{16pt}{20pt}\selectfont
+Introducing a weak harmonic potential to the 1D Bose-Einstein condensate model confines the solitons axially within the box. After a collision the solitons climb a distance up the potential barrier dictated by their momentum (and hence velocity) and return to collide again. The axial potential preserves the relative phase and velocity of the solitons, allowing perfect periodic motion. However, the introduction of this potential places limits on the range of interaction parameters $g$ which lead to soliton-like behaviour.
 
-\cBOX{0.97}{\section*{Repeated Collisions}
-
+\vspace{1ex}
 \begin{center}
-\includegraphics[width=\columnwidth]{difference.png}
-\captionof{figure}{$n=50$, $p=0.6$}
+\includegraphics[width=\columnwidth]{difference-20.png}
+\captionof{figure}{Two solitons with starting positions $-4$ and $4$ and velocities $20$ and $-20$, with relative phase either $0$ or $\pi$ radians. The interaction parameter $g=-12$ thus $\zeta=3$. The images here are plotted on a symmetric log scale with a linear cutoff of $\psi^2 = 0.05$ to improve visibility of the solitons. }
 \end{center}
 
+It was observed that for 
 
-
-}{white}{white}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\cBOX{0.97}{\section*{Contact Process}
-%This process can also be constructed graphically. To $x \in I$ attach independent Poisson processes
-%$\{T_{n}^{(x,y)}, n \geq 1\}$ of rate $\lambda$ for each neighbour $y$ and $\{U_{n}^{x}, n \geq 1\}$ of
-%rate $1$. For the times $T_{n}^{(x,y)}$ draw an arrow from $x$ to $y$ and write at $\delta$ at times
-%$U_{n}^{x}$. Paths and $\xi_{t}^{A}$ are defined as they were in the Voter model.
-
-%If we take $I=\mathbb{Z}^{d}$ it is not clear if the process survives. If we take $\lambda \leq 1/2d$
-%the maximal rate of infection for any individual is less than its healing rate, and the process will
-%die out almost surely.
-
-%In the situation of the finite graph approximate results are known for the expected lifetime of 
-%the infection. 
-%}{white}{black}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\vspace{-2cm}
-\cBOX{0.97}{
+}
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
