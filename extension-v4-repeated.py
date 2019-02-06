@@ -107,25 +107,20 @@ for ig,g in enumerate(gs):
     harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_params[ig]), V, g) 
     
     difference = harmPot - harmPotPi
-    #print xs[2000] 
-    #print ts[1600]
-    #print difference[2000,1600] #debugging 
     
     
     ########## PLOTS ############
     pyplot.figure(figsize=(18,5))
-    pyplot.suptitle("g={}".format(g))
+    #pyplot.suptitle("g={}".format(g))
     
     pyplot.subplot(131)
-    pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
-    #, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())
+    pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
     pyplot.xlabel("Space")
     pyplot.ylabel("Time")
     pyplot.title("Relative phase {}".format(rel_phase1))
     
     pyplot.subplot(132)
-    pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis')
-    #, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()) 
+    pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
     pyplot.xlabel("Space")
     pyplot.ylabel("Time")
     #pyplot.title("Relative phase {}".format(rel_phase2))
@@ -145,7 +140,7 @@ for ig,g in enumerate(gs):
     #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
     pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
     
-    #pyplot.savefig('difference-g5.png')
+    pyplot.savefig('difference-g7.png')
     
     
     #pyplot.savefig("extension-v4-pic.png")
