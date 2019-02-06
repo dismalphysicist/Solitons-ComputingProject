@@ -95,7 +95,7 @@ V = 1/2 * mws * xs**2
 #zeroPot = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase1,0.5), 0, g) 
 #zeroPotPi = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase2,0.5), 0, g) 
 
-velocity = 10 #L/2 originally 
+velocity = 20 #L/2 originally 
 
 harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, -4*family_param) 
 harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, -4*family_param) 
@@ -121,13 +121,20 @@ pyplot.ylabel("Time")
 pyplot.title("Relative phase " + r'$\pi$')
 
 pyplot.subplot(133)
-pyplot.plot(difference[:,3240], color="#000099")
+t=0
+if velocity == 10:
+    t=16
+    pyplot.plot(difference[:,3200], color="#000099")
+elif velocity == 20:
+    t=15
+    pyplot.plot(difference[:,3000], color="#000099")
 pyplot.xlabel("Space")
 pyplot.xticks(np.array([0,1000,2000,3000,4000]),[-20.0,-10.0,0.0,10.0,20.0])
-pyplot.ylabel("Difference in " + r'$\psi^2$' + "   " + r'$/10^{-5}$')
-pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
-pyplot.title("Difference at t=16.2")
-pyplot.savefig('difference.png')
+#pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
+#pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
+pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
+
+pyplot.savefig('difference-20.png')
 
 
 #pyplot.savefig("extension-v4-pic.png")
