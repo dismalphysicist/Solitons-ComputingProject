@@ -143,7 +143,7 @@ Substituting the $v=0$ case into the time-independent Schrodinger equation and s
 
 \section*{{\fontsize{28pt}{35pt}\selectfont Propagating a Soliton}}
 
-The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$ from 0 to either 20 or 40 [UNITS]. The box length used was initially 20 [UNITS], which was increased to 40 for repeated soliton collisions. [put in repeated collisions section?] A box length of 20 meant that a single soliton could have a velocity of up to 5 [UNITS] in the limit of zero width up to $t=20$, without boundary effects causing unrealistic distortion. 4000 space points and 4000 time points were used to minimise discretization effects. For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. 
+The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20, and was increased to 40x40 for repeated collisions. 4000 space points and 4000 time points were used to minimise discretization effects. For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. 
 
 \begin{center}
 \includegraphics[width=\columnwidth]{milestonepic.png}
@@ -176,11 +176,11 @@ Introducing a weak harmonic potential to the 1D Bose-Einstein condensate model c
 
 \vspace{1ex}
 \begin{center}
-\includegraphics[width=\columnwidth]{difference-g5.png}
-\captionof{figure}{Two solitons with starting positions $-4$ and $4$ and velocities $20$ and $-20$, with relative phase either $0$ or $\pi$ radians. The interaction parameter $g=-5$ thus $\zeta=1.25$. The images here are plotted on a symmetric log scale with a linear cutoff of $\psi^2 = 0.3$ to improve visibility of the solitons. }
+\includegraphics[width=\columnwidth]{difference-g7.png}
+\captionof{figure}{Two solitons with starting positions $-4$ and $4$ and velocities $10$ and $-10$, with relative phase either $0$ or $\pi$ radians. The interaction parameter $g=-7$ thus $\zeta=1.75$. The images here are plotted on a symmetric log scale with a linear cutoff of $\psi^2 = 0.3$ to improve visibility of the solitons. }
 \end{center}
 
-It was observed that for $g < 4$, the solitons were affected adversely by the external potential and appeared diffuse. For $g \geq 12$ a numerical limit of the model was reached and the solitons lost energy in subsequent collisions. The model is valid for interaction parameters between these values, corresponding to family parameters $1 < g \leq 3$.
+It was observed that for $g \leq 4$, the solitons were affected adversely by the external potential and appeared diffuse. For $g \geq 12$ a numerical limit of the model was reached and the solitons lost energy in subsequent collisions. The model is valid for interaction parameters between these values, corresponding to family parameters $1 < g < 3$.
 
 }
 }{white}{white}
@@ -199,10 +199,6 @@ It was observed that for $g < 4$, the solitons were affected adversely by the ex
 \begin{thebibliography}{}
 
 \bibitem{KdV} D. J. Korteweg and G. de Vries (1895), "On the Change of Form...", \textit{Philosophical Magazine} \textbf{39}(240) pp. 422-443.
-
-\bibitem{Segur} H. Segur (1973), "The Korteweg de Vries equation and water waves, part 1", \textit{Journal of Fluid Mechanics} \textbf{59} pp. 721-736.
-
-\bibitem{Gardner} C. S. Gardner et al. (1967), "Method for Solving the Korteweg de Vries Equation", \textit{Physical Review Letters} \textbf{19}(19) pp. 1095-1097.
 
 \end{thebibliography} 
 
