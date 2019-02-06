@@ -83,10 +83,8 @@ def accuracy_test(g_test,t):
 
 ######### TESTS #########
 
-#g = -5
-gs = np.array([-2,-3,-4,-5,-10,-12,-15,-20])
-#family_param = -g/4
-family_params = -gs/4
+g = -5
+family_param = -g/4
 
 rel_phase1 = 0
 rel_phase2 = np.pi
@@ -101,52 +99,52 @@ V = 1/2 * mws * xs**2
 
 velocity = 10 #L/2 originally 
 
-for ig,g in enumerate(gs): 
+harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
+harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, g) 
 
-    harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_params[ig]), V, g) 
-    harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_params[ig]), V, g) 
-    
-    difference = harmPot - harmPotPi
-    
-    
-    ########## PLOTS ############
-    pyplot.figure(figsize=(18,5))
-    pyplot.suptitle("g={}".format(g))
-    
-    pyplot.subplot(131)
-    pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
-    #, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())
-    pyplot.xlabel("Space")
-    pyplot.ylabel("Time")
-    pyplot.title("Relative phase {}".format(rel_phase1))
-    
-    pyplot.subplot(132)
-    pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis')
-    #, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()) 
-    pyplot.xlabel("Space")
-    pyplot.ylabel("Time")
-    #pyplot.title("Relative phase {}".format(rel_phase2))
-    pyplot.title("Relative phase " + r'$\pi$')
-    
-    pyplot.subplot(133)
-    t=0
-    if velocity == 10:
-        t=16
-        pyplot.plot(difference[:,3200], color="#000099")
-    elif velocity == 20:
-        t=15.16
-        pyplot.plot(difference[:,3032], color="#000099")
-    pyplot.xlabel("Space")
-    pyplot.xticks(np.array([0,1000,2000,3000,4000]),[-20.0,-10.0,0.0,10.0,20.0])
-    #pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
-    #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
-    pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
-    
-    #pyplot.savefig('difference-g5.png')
-    
-    
-    #pyplot.savefig("extension-v4-pic.png")
-    pyplot.show() 
+difference = harmPot - harmPotPi
+
+
+########## PLOTS ############
+pyplot.figure(figsize=(18,5))
+#pyplot.suptitle("Weak Harmonic Confining Potential")
+
+
+
+pyplot.subplot(131)
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis') 
+#, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max())
+pyplot.xlabel("Space")
+pyplot.ylabel("Time")
+pyplot.title("Relative phase {}".format(rel_phase1))
+
+pyplot.subplot(132)
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis')
+#, norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()) 
+pyplot.xlabel("Space")
+pyplot.ylabel("Time")
+#pyplot.title("Relative phase {}".format(rel_phase2))
+pyplot.title("Relative phase " + r'$\pi$')
+
+pyplot.subplot(133)
+t=0
+if velocity == 10:
+    t=16
+    pyplot.plot(difference[:,3200], color="#000099")
+elif velocity == 20:
+    t=15.16
+    pyplot.plot(difference[:,3032], color="#000099")
+pyplot.xlabel("Space")
+pyplot.xticks(np.array([0,1000,2000,3000,4000]),[-20.0,-10.0,0.0,10.0,20.0])
+#pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
+#pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
+pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
+
+pyplot.savefig('difference-g5.png')
+
+
+#pyplot.savefig("extension-v4-pic.png")
+pyplot.show() 
 
 # pyplot.figure()
 # pyplot.imshow(np.transpose(schrodinger_time_evolution(soliton(0,0,0,family_param), V, -4*family_param)), extent=(-20,20,0,40), origin='lower', cmap='viridis')
