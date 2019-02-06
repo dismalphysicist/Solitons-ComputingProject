@@ -83,7 +83,7 @@
 
 \begin{tikzpicture}[remember picture, overlay]
   \node [anchor=north west, inner sep=1cm]  at (current page.north west)
-     {\includegraphics[height=3cm]{university}};
+     {\includegraphics[height=3cm]{university1}};
 \end{tikzpicture}
 \hfill
 \cBoX{0.75}{\centering
@@ -139,11 +139,11 @@ It is usual to define $\zeta$ as a parameter to characterise width, with units o
 \psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i v x + \phi},
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
-Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=4\zeta$. 
+Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$ to eliminate $x$, we find $g=-4\zeta$.
 
 \section*{{\fontsize{28pt}{35pt}\selectfont Propagating a Soliton}}
 
-The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$ from 0 to either 20 or 40 [UNITS]. The box length used was initially 20 [UNITS], which was increased to 40 for repeated soliton collisions. [put in repeated collisions section?] A box length of 20 meant that a single soliton could have a velocity of up to 5 [UNITS] in the limit of zero width up to $t=20$, without boundary effects causing unrealistic distortion. 4000 space points and 4000 time points were used to minimise discretization effects. 
+The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$ from 0 to either 20 or 40 [UNITS]. The box length used was initially 20 [UNITS], which was increased to 40 for repeated soliton collisions. [put in repeated collisions section?] A box length of 20 meant that a single soliton could have a velocity of up to 5 [UNITS] in the limit of zero width up to $t=20$, without boundary effects causing unrealistic distortion. 4000 space points and 4000 time points were used to minimise discretization effects. For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. 
 
 \begin{center}
 \includegraphics[width=\columnwidth]{milestonepic.png}
