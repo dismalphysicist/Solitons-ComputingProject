@@ -50,7 +50,7 @@ def schrodinger_time_evolution(psi_initial, V, g):
 
 n_points = 2000 #number of timesteps (also number of x steps)
 dt = 0.001
-ts = np.linspace(0,20,n_points) #only for phase 
+ts = np.linspace(0,2,n_points) #only for phase 
 xs = np.linspace(-10, 10, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -96,7 +96,6 @@ testpsi4 = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase2,fa
 difference1 = testpsi - testpsi2
 difference2 = testpsi3 - testpsi4
 
-
 ########## PLOTS ############
 
 pyplot.figure(figsize=(15,10)) 
@@ -121,18 +120,18 @@ pyplot.subplot(233)
 pyplot.plot(difference1[:,900])
 pyplot.xlabel("Space")
 pyplot.xticks(np.array([0,500,1000,1500,2000]),np.array([-10.0,-5.0,0.0,5.0,10.0]))
-pyplot.title("Difference at t=9")
+pyplot.title("Difference in "  + r'$\psi^2$' + " at t=9")
 #pyplot.savefig('difference.png')
 
 pyplot.subplot(234)
-pyplot.imshow(np.transpose(testpsi3), extent=(-3,3,9,16), origin='lower', cmap='viridis') 
-pyplot.xlabel("Space")
+pyplot.imshow(np.transpose(testpsi3), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
+pyplot.xlabel("Space") 
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase1))
 #pyplot.savefig('rel_phase_0.png')
  
 pyplot.subplot(235)
-pyplot.imshow(np.transpose(testpsi4), extent=(-3,3,9,16), origin='lower', cmap='viridis') 
+pyplot.imshow(np.transpose(testpsi4), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space")
 pyplot.ylabel("Time")
 pyplot.title("Relative phase {}".format(rel_phase2))
@@ -140,11 +139,11 @@ pyplot.title("Relative phase {}".format(rel_phase2))
 
 #one minus the other to show where fringes are 
 pyplot.subplot(236)
-pyplot.plot(difference2[400:1600,1250])
+pyplot.plot(difference2[:,1000])
 pyplot.xlabel("Space")
-pyplot.xticks(np.array([0,200,400,600,800,1000,1200]),np.array([-3,-2,-1,0,1,2,3]))
-pyplot.title("Difference at t=12.5")
+pyplot.xticks(np.array([0,500,1000,1500,2000]),np.array([-10.0,-5.0,0.0,5.0,10.0]))
+pyplot.title("Difference in "  + r'$\psi^2$' + " at t=10")
 #pyplot.savefig('difference.png')
 
-#pyplot.savefig('extensionpic.png')
+pyplot.savefig('extensionpic.png')
 pyplot.show()
