@@ -88,7 +88,7 @@
 \hfill
 \cBoX{0.75}{\centering
 \vspace{1ex}
-{\fontsize{1.8cm}{2cm}\selectfont{\textsc{Solitons in a Bose-Einstein Condensate \\}}}
+{\fontsize{1.8cm}{2cm}\selectfont{\textsc{Collisions of Matter-Wave Solitons \\}}}
 \huge
 \textsc{Lois P Flower\\ %L P Flower? 
 Project Tutor: Dr. Rahul Sawant}
@@ -128,7 +128,7 @@ Project Tutor: Dr. Rahul Sawant}
 \cBOX{0.97}{\section*{{\fontsize{28pt}{35pt}\selectfont Introduction}}
 {
 \fontsize{16pt}{20pt}\selectfont
-The atoms in a Bose-Einstein condensate are all described by the same wavefunction, since they are in the same quantum state, which includes each atom's interaction with the other atoms in the condensate. Introducing an pseudopotential term $g \abs{\psi}^2$ which characterises the interactions between the particles into the dimensionless Schr\"{o}dinger equation yields the Gross-Pitaevskii equation \cite{}
+The atoms in a Bose-Einstein condensate are all described by the same wavefunction, since they are in the same quantum state, which includes each atom's interaction with the other atoms in the condensate. Introducing an pseudopotential term $g \abs{\psi}^2$ which characterises the interactions between the particles into the dimensionless Schr\"{o}dinger equation yields the Gross-Pitaevskii equation \cite{Gross}\cite{Pitaevskii}
 \begin{equation}
 i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + (V + g \abs{\psi}^2) \psi,
 \end{equation}
@@ -141,6 +141,7 @@ It is usual to define $\zeta$ as a parameter to characterise width, with units o
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
 Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$ to eliminate $x$, we find $g=-4\zeta$.
 
+\vspace{1ex}
 \section*{{\fontsize{28pt}{35pt}\selectfont Propagating a Soliton}}
 
 The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20, and was increased to 40x40 for repeated collisions. 4000 space points and 4000 time points were used to minimise discretization effects. For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. 
@@ -157,13 +158,20 @@ parameter $\zeta = 1$ hence $g=-4$ perfectly confines the soliton with velocity 
 
 \columnbreak
 \cBOX{0.97}{\section*{{\fontsize{28pt}{35pt}\selectfont Soliton Collisions}}
+{
+\fontsize{16pt}{20pt}\selectfont
+
+Two solitons were created at positions symmetrical about zero and given equal and opposite velocities to cause them to collide roughly halfway through the time period modelled. The resulting dynamics were plotted for different values of the interaction parameter $g$, two of which are plotted below (see Fig.2). For small negative values of $g$, the solitons are fairly diffuse initially and produce a large interference pattern when they collide, but still emerge with their velocities and relative phase unchanged. Large negative $g$ values and hence very narrow solitons have intuitively stranger collision properties, seeming to 'bounce off' one another when in antiphase. This is due to the wave properties of the condensate and is not indicative of the atoms actually bouncing off one another. For relative phases of $\pi/2$ and $3\pi/2$, not shown here, the interference pattern is asymmetrical but the solitons still appear not to touch as they collide. 
 
 \begin{center}
 \includegraphics[width=\columnwidth]{extensionpic.png}
-\captionof{figure}{Caption}
+\captionof{figure}{Two colliding solitons, in phase and in antiphase. The top row have $g=-2$ corresponding to $\zeta=0.5$ whilst the bottom row have $g=-12$, $\zeta=4$. Both sets of solitons have velocities $abs{v}=10/3$.}
 \end{center}
 
+At first glance, the two phase cases for $g=-2$ (see Fig.2 top row) look very similar. In reality, where the solitons are in phase at the time of collision there is a central bright fringe in the interference pattern, as opposed to a central dark fringe in the antiphase case. The rightmost plot is included to illustrate this, showing the difference $\psi_0^2 - \psi_{\pi}^2$ at the time of collision. 
+When narrow solitons collide (see Fig.2 bottom row), the resulting interference resembles a particle-particle interaction, especially in the antiphase case. 
 
+}
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -180,7 +188,9 @@ Introducing a weak harmonic potential to the 1D Bose-Einstein condensate model c
 \captionof{figure}{Two solitons with starting positions $-4$ and $4$ and velocities $10$ and $-10$, with relative phase either $0$ or $\pi$ radians. The interaction parameter $g=-7$ thus $\zeta=1.75$. The images here are plotted on a symmetric log scale with a linear cutoff of $\psi^2 = 0.3$ to improve visibility of the solitons. }
 \end{center}
 
-It was observed that for $g \leq 4$, the solitons were affected adversely by the external potential and appeared diffuse. For $g \geq 12$ a numerical limit of the model was reached and the solitons lost energy in subsequent collisions. The model is valid for interaction parameters between these values, corresponding to family parameters $1 < g < 3$.
+It was observed that for $g \leq 4$, the solitons were affected adversely by the external potential and appeared diffuse. For $g \geq 12$ a numerical limit of the model was reached and the solitons lost energy in subsequent collisions. The model is valid for interaction parameters between these values, corresponding to family parameters $1 < \zeta < 3$.
+
+It is possible to model matter-wave solitons as classical particles due to the phase-independence of the solitons' behaviour after a collision \cite{Adams}. Qualitatively, the regimes explored here seem to be suitable for modelling as classical particles. 
 
 }
 }{white}{white}
@@ -188,7 +198,12 @@ It was observed that for $g \leq 4$, the solitons were affected adversely by the
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\vspace{-2cm}
-\cBOX{0.97}{\section*{Conclusion}
+\cBOX{0.97}{\section*{{\fontsize{24pt}{30pt}\selectfont Final Remarks}}
+{\fontsize{16pt}{20pt}\selectfont
+To investigate whether the extent and parameters used here are well explained by a particle model, an effective inter-soliton potential will be introduced and the dynamics of the 'particles' observed. 
+
+It would also be interesting to introduce a third soliton and observe subsequent chaotic dynamics in certain regimes, analogous to the classical three-body problem. 
+}
 }{white}{white}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -198,7 +213,9 @@ It was observed that for $g \leq 4$, the solitons were affected adversely by the
 
 \begin{thebibliography}{}
 
-\bibitem{KdV} D. J. Korteweg and G. de Vries (1895), "On the Change of Form...", \textit{Philosophical Magazine} \textbf{39}(240) pp. 422-443.
+\bibitem{Gross} E. P. Gross (1961), "Structure of a quantised vortex in boson systems", \textit{Il Nuovo Cimento}, \textbf{20}(3) pp. 454-477. 
+\bibitem{Pitaevskii}  L. P. Pitaevskii (1961), "Vortex lines in an imperfect Bose gas", \textit{Sov. Phys. JETP.} \textbf{13}(2) pp. 451–454.
+\bibitem{Adams} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). 
 
 \end{thebibliography} 
 
