@@ -110,7 +110,7 @@ for ig,g in enumerate(gs):
     
     
     ########## PLOTS ############
-    pyplot.figure(figsize=(18,5))
+    pyplot.figure(figsize=(16,5))
     #pyplot.suptitle("g={}".format(g))
     
     pyplot.subplot(131)
