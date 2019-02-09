@@ -75,7 +75,7 @@ def accuracy_test(g_test,t):
 
 #tests
 family_param = 1
-velocity = (L/6)/2
+velocity = 1 #was 5/3 
 testpsi = schrodinger_time_evolution(soliton(velocity), 0, 0) #no nonlinear term 
 g_test = -0.025
 g_test2 = -4*family_param 
