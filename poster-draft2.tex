@@ -11,7 +11,8 @@
 % width=554mm,height=400mm
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{graphicx,multicol,color} 
+\usepackage{graphicx,multicol} 
+\usepackage[dvipsnames]{xcolor}
 %\usepackage{everyshi,eso-pic,calc,ifthen,wallpaper} 
 \usepackage{tikz}
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
@@ -86,7 +87,9 @@
      {\includegraphics[height=3cm]{university1}};
 \end{tikzpicture}
 \hfill
-\cBoX{0.75}{\centering
+\cBoX{0.75}{
+\color{black}
+\centering 
 \vspace{1ex}
 {\fontsize{1.8cm}{2cm}\selectfont{\textsc{Collisions of Matter-Wave Solitons \\}}}
 \huge
@@ -139,7 +142,7 @@ It is usual to define $\zeta$ as a parameter to characterise width, with units o
 \psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i v x + \phi},
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. Defining $\zeta$ in this way results in dimensionless probabilities which integrate to unity over $(-\infty,\infty)$.
-Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$ to eliminate $x$, we find $g=-4\zeta$ in the stationary state.
+Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$ to eliminate $x$ yields a stationary-state value for the interaction parameter of $g=-4\zeta$.
 
 \vspace{1ex}
 \section*{{\fontsize{28pt}{35pt}\selectfont Propagating a Soliton}}
@@ -200,7 +203,7 @@ It is possible to model matter-wave solitons as classical particles due to the p
 \vspace{-2cm}
 \cBOX{0.97}{\section*{{\fontsize{24pt}{30pt}\selectfont Final Remarks}}
 {\fontsize{16pt}{20pt}\selectfont
-To investigate whether the extent and parameters used here are well explained by a particle model, an effective inter-soliton potential will be introduced and the dynamics of the 'particles' observed. 
+To investigate whether the extent and parameters used here are well explained by a particle model, an effective inter-soliton potential will be introduced within Newtonian dynamics and the solitons treated as classical particles. 
 
 It would also be interesting to introduce a third soliton and observe subsequent chaotic dynamics in certain regimes, analogous to the classical three-body problem. 
 }
