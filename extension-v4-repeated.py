@@ -115,16 +115,16 @@ for ig,g in enumerate(gs):
     
     pyplot.subplot(131)
     pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
-    pyplot.xlabel("Space")
-    pyplot.ylabel("Time")
-    pyplot.title("Relative phase {}".format(rel_phase1))
+    pyplot.xlabel("Space", fontsize=12)
+    pyplot.ylabel("Time", fontsize=12)
+    pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
     
     pyplot.subplot(132)
     pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
-    pyplot.xlabel("Space")
-    pyplot.ylabel("Time")
+    pyplot.xlabel("Space", fontsize=12)
+    pyplot.ylabel("Time", fontsize=12)
     #pyplot.title("Relative phase {}".format(rel_phase2))
-    pyplot.title("Relative phase " + r'$\pi$')
+    pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
     
     pyplot.subplot(133)
     t=0
@@ -134,11 +134,11 @@ for ig,g in enumerate(gs):
     elif velocity == 20:
         t=15.16
         pyplot.plot(difference[1500:2500,1516], color="#000099")
-    pyplot.xlabel("Space")
+    pyplot.xlabel("Space", fontsize=12)
     pyplot.xticks(np.array([0,500,1000]),[-5.0,0.0,5.0])
     #pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
     #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
-    pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t))
+    pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t), fontsize=16)
     
     pyplot.savefig('difference-g7.png')
     

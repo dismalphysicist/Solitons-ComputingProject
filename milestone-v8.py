@@ -68,8 +68,8 @@ def accuracy_test(g_test,t):
     psisquareds_test = schrodinger_time_evolution(soliton(0), 0, g_test)
     t = int(t/dt) #taking timestep into account and making sure it's an integer as it is used for indexing 
     norm = np.sum(psisquareds_test[750:1250,:],0)*dt # sum over axis 0, e.g. space between -2 and 2, multiplied by dt as each point is multiplied by dt 
-    print "norm at 0: {}".format(norm[0])
-    print "norm at 1.999: {}".format(norm[t])
+    #print "norm at 0: {}".format(norm[0])
+    #print "norm at 1.999: {}".format(norm[t])
     accuracy = abs(norm[0] - norm[t])*100/norm[0] #percentage change in norm 
     return accuracy
 
@@ -92,15 +92,15 @@ pyplot.figure(figsize=(10,6))
 
 pyplot.subplot(121)
 pyplot.imshow(np.transpose(testpsi), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
-pyplot.xlabel("Space")
-pyplot.ylabel("Time")
-pyplot.title(r'$g=0$')
+pyplot.xlabel("Space", fontsize=12)
+pyplot.ylabel("Time", fontsize=12)
+pyplot.title(r'$g=0$', fontsize=16)
 
 pyplot.subplot(122)
 pyplot.imshow(np.transpose(testpsi2), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
-pyplot.xlabel("Space")
-pyplot.ylabel("Time")
-pyplot.title(r'$g= {}$'.format(g_test2))
+pyplot.xlabel("Space", fontsize=12)
+pyplot.ylabel("Time", fontsize=12)
+pyplot.title(r'$g= {}$'.format(g_test2), fontsize=16)
 
 pyplot.savefig('milestonepic.png')
 pyplot.show()
