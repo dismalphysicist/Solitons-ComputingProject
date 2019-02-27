@@ -84,7 +84,7 @@ def accuracy_test(g_test,t):
 ######### TESTS #########
 
 #g = -5
-gs = np.array([-7])
+gs = np.array([-8])
 #family_param = -g/4
 family_params = -gs/4
 
