@@ -151,5 +151,3 @@ for ig,g in enumerate(gs):
 # pyplot.title("Harmonic potential on one soliton")
 #pyplot.savefig("harmonic_confinement-1soliton.png")
 # pyplot.show()
-
-# testing changes #
