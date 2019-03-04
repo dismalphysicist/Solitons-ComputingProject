@@ -16,6 +16,7 @@ labelfont=bf]{caption}                      % Defines caption font size as 9pt a
 
 \DeclareMathOperator{\sech}{sech}		% Defining sech so it doesn't italicise it 
 \DeclareMathOperator{\Int}{Int}		% Defining 'integer part of' so it doesn't italicise it 
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}} %shorthand for scientific notation
 
 \usepackage{etoolbox}                       % Customise date to preferred format
 \makeatletter
@@ -57,16 +58,19 @@ In this report we investigate the relation between amplitude and speed for solit
 
 \section{Introduction, Theory and Preliminary Results} \label{Intro}
 
-By setting $\hbar = 1$, so the Schrodinger equation is dimensionless, and introducing an effective potential term $g abs{\psi}^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation 
+In natural units and with rescaled length and time variables, the Schrodinger equation is dimensionless. Introducing an effective potential term $g |\psi|^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation 
 \begin{equation}
-i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + V \psi 
+i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + V \psi.
+\end{equation}
 
 Define $\zeta$ as a parameter to characterise width, with units 1/length. We then have the normalised wavefunction 
 \begin{equation} 
 \psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i v x + \phi},
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
-Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=4\zeta$. 
+Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=-4\zeta$. 
+
+The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. A Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and the number of atoms $N$ is 5000 per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{mg^2}$ which evaluates to 8.56 ns. 
 
 Describing the interparticle interaction by a pseudopotential approximation is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length. 
 
@@ -109,7 +113,7 @@ Our aims in this investigation are to test the speed-amplitude relation for soli
 To investigate the properties of solitary waves, we filled a wave tank with water and used a sluice to create solitons. The tank was 30 cm deep, 15.2 cm wide and 2.98 m long. We used a water depth of 8 cm, since to use the predictions of the KdV equation (see Section \ref{Intro}), the soliton amplitude must be significantly less than that of the water, but we found with a larger volume of water in the tank the waves were likely to spill over. We filled the sluice with water at depths between 10.5 cm and 14.5 cm to produce at least one visible soliton which endured long enough to take measurements. Rapidly removing the sluice gate leaves a rectangular disturbance in the tank, which evolves eventually into one or more solitons with different amplitudes and hence different speeds. 
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{diagram1-NoReflections.png}
+%\includegraphics[width=\columnwidth]{diagram1-NoReflections.png}
 \caption{The experimental setup for measuring the speed of solitons with no reflections involved.}
 \label{Diagram1}
 \end{figure}
@@ -119,7 +123,7 @@ As you can see in Fig. \ref{Diagram1}, a camera was set up near the equipment so
 Soliton amplitude gradually decreases as a result of energy lost in collisions with the tank walls, so we repeated the measurement at later times on the same soliton. As its amplitude decreased, its speed decreased and so we assumed these were valid measurements, equivalent to producing new solitons using a smaller volume of water in the sluice. By repeating this process with differing volumes of water in the sluice, we obtained repeats for most soliton amplitudes (measured to the nearest 0.25 cm) and took the weighted mean of the velocites.
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{diagram2-Reflections.png}
+%\includegraphics[width=\columnwidth]{diagram2-Reflections.png}
 \caption{The setup for observing the reflections of solitons off the wave tank wall.}
 \label{Diagram2}
 \end{figure}
@@ -131,7 +135,7 @@ As shown in Fig. \ref{Diagram2}, to measure properties of solitons undergoing co
 \section{Results} \label{Results}
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{noReflections-residuals.png}
+%\includegraphics[width=\columnwidth]{noReflections-residuals.png}
 \caption{The green points with error bars show the measured velocity of solitons plotted against their measured amplitude, and the black line shows the best fit to these points. The orange area shows the theoretical velocity prediction for that amplitude, with the associated error. The normalised residuals of the data to the fit are plotted below.}
 \label{Graph1}
 \end{figure}
@@ -142,7 +146,7 @@ We begin by considering the velocity measurements taken over a single length of 
 Next, we look at the second experimental setup, involving solitons approaching the wave tank wall, reflecting off it and travelling away again, sometimes with significantly reduced amplitude and speed. We know from previous research and the KdV equation that solitons undergoing overtaking collisions emerge unscathed except for a slightly reduced amplitude and a phase shift, advancing the faster wave and retarding the slower \cite{Segur}. We aimed to investigate whether a similar mechanism applies to a soliton reflecting off a wall, in effect colliding head-on with itself. 
 
 \begin{figure}[h]
-\includegraphics[width=\columnwidth]{reflections-residuals.png}
+%\includegraphics[width=\columnwidth]{reflections-residuals.png}
 \caption{The green points show the measured speed of solitons, including the reflection, plotted against their initial measured amplitude. The orange area, as before, shows the theoretical velocity prediction for that amplitude with its error.}
 \label{Graph2}
 \end{figure}
