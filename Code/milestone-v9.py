@@ -61,6 +61,7 @@ def particle_SHM(start, velocity, frequency):
 n_times = 2000 #number of timesteps (also number of x steps)
 dt = 0.001 #was 0.01
 xs = np.linspace(-10, 10, n_times)
+ts = np.linspace(0,2,n_times) 
 L = xs[-1] - xs[0] #box length 
 dx = L/n_times
 
@@ -87,14 +88,14 @@ def accuracy_test(g_test,t):
 
 #tests
 
-p = particle_SHM(-4,18,0)
-
 family_param = 1
 velocity = 1 #was 5/3 
 testpsi = schrodinger_time_evolution(soliton(velocity), 0, 0) #no nonlinear term 
 g_test = -0.025
 g_test2 = -4*family_param 
 testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear interactions 
+
+p = particle_SHM(0,velocity*10/5,0.000001)
 
 #testing accuracy
 acc = accuracy_test(g_test2, 1.999)
@@ -116,6 +117,7 @@ pyplot.imshow(np.transpose(testpsi2), extent=(-10,10,0,20), origin='lower', cmap
 pyplot.xlabel("Space", fontsize=12)
 pyplot.ylabel("Time", fontsize=12)
 pyplot.title(r'$g= {}$'.format(g_test2), fontsize=16)
+pyplot.plot(p,ts*10) #adding particle 
 
 pyplot.savefig('milestonepic.png')
 pyplot.show()

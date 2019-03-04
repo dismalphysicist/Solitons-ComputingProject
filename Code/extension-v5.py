@@ -27,7 +27,7 @@ def schrodinger_time_evolution(psi_initial, V, g):
 	
 	ks = 2*np.pi*getks(xs,dx) #accessing global variables. Factor of 2pi
 	
-	psisquareds = np.zeros((len(psi_initial),n_points)) #initialising 2d array
+	psisquareds = np.zeros((n_points,n_times)) #initialising 2d array
 	
 	psi = psi_initial #prepare for loop
 	psisq = abs(psi_initial)**2 
@@ -45,6 +45,16 @@ def schrodinger_time_evolution(psi_initial, V, g):
 
 		
 	return psisquareds
+	
+
+def particle_SHM(start, velocity, frequency):
+    
+    x = np.zeros(n_times)
+    
+    for i,t in enumerate(ts):
+        x[i] = start * np.cos(frequency*t) + velocity/frequency * np.sin(frequency*t)
+        
+    return x
 
 
 #global variables for extent of modelling 
@@ -79,9 +89,11 @@ def accuracy_test(g_test,t):
     norm = np.sum(psisquareds_test[750:1250,:],0) # sum over axis 0, e.g. space between -2 and 2
     accuracy = abs(norm[0] - norm[t])*100/norm[0] #percentage change in norm 
     return accuracy
+    
 
 
 ######### TESTS #########
+
 
 #g = -5
 gs = np.array([-8])
@@ -101,6 +113,8 @@ V = 1/2 * mws * xs**2
 
 velocity = 10 #L/2 originally 
 
+p = particle_SHM(-4,20,w) #velocity scaling of 1/5 * 10 (10 from time scaling)
+
 for ig,g in enumerate(gs): 
 
     harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_params[ig]), V, g) 
@@ -118,6 +132,7 @@ for ig,g in enumerate(gs):
     pyplot.xlabel("Space", fontsize=12)
     pyplot.ylabel("Time", fontsize=12)
     pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
+    pyplot.plot(p,ts*10)
     
     pyplot.subplot(132)
     pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
@@ -140,10 +155,9 @@ for ig,g in enumerate(gs):
     #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
     pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t), fontsize=16)
     
-    pyplot.savefig('difference-g7.png')
+    pyplot.savefig('difference-g8.png')
     
     
-    #pyplot.savefig("extension-v4-pic.png")
     pyplot.show() 
 
 # pyplot.figure()
