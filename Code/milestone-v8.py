@@ -61,6 +61,7 @@ def particle_SHM(start, velocity, frequency):
 n_times = 2000 #number of timesteps (also number of x steps)
 dt = 0.001 #was 0.01
 xs = np.linspace(-10, 10, n_times)
+ts = np.linspace(0,2,n_times) 
 L = xs[-1] - xs[0] #box length 
 dx = L/n_times
 
@@ -87,7 +88,7 @@ def accuracy_test(g_test,t):
 
 #tests
 
-p = particle_SHM(-4,18,0)
+#p = particle_SHM(-4,18,0)
 
 family_param = 1
 velocity = 1 #was 5/3 

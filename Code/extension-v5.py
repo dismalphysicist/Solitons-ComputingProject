@@ -47,13 +47,14 @@ def schrodinger_time_evolution(psi_initial, V, g):
 	return psisquareds
 	
 
-def particle_SHM(start, velocity, frequency):
+def particles(start, velocity, spring_constant, mass):
     
+    frequency = np.sqrt(spring_constant/mass)
     x = np.zeros(n_times)
     
     for i,t in enumerate(ts):
-        x[i] = start * np.cos(frequency*t) + velocity/frequency * np.sin(frequency*t)
-        
+        x[i] = start * np.cos(frequency*t) + velocity/frequency * np.sin(frequency*t) 
+    
     return x
 
 
@@ -94,74 +95,37 @@ def accuracy_test(g_test,t):
 
 ######### TESTS #########
 
+g = -8
 
-#g = -5
-gs = np.array([-8])
-#family_param = -g/4
-family_params = -gs/4
+family_param = -g/4
 
 rel_phase1 = 0
 rel_phase2 = np.pi
 
 #weak axial harmonic confining potential (assume radial confinement perfect, so 1D motion)
-w = 2*np.pi/4
-mws = 1*w**2 #m w^2 characterises strength of harmonic potential 
-V = 1/2 * mws * xs**2
+K = 1*(2*np.pi/4)**2 #m w^2 characterises strength of harmonic potential, mass of soliton = 1
+V = 1/2 * K * xs**2
 
 #zeroPot = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase1,0.5), 0, g) 
 #zeroPotPi = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase2,0.5), 0, g) 
 
 velocity = 10 #L/2 originally 
 
-p = particle_SHM(-4,20,w) #velocity scaling of 1/5 * 10 (10 from time scaling)
+#particle of mass 0.5
+p = particles(-4,20,K,0.5) #velocity scaling of 1/5 * 10 (10 from time scaling)
 
-for ig,g in enumerate(gs): 
 
-    harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_params[ig]), V, g) 
-    harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_params[ig]), V, g) 
-    
-    difference = harmPot - harmPotPi
-    
-    
-    ########## PLOTS ############
-    pyplot.figure(figsize=(16,5))
-    #pyplot.suptitle("g={}".format(g))
-    
-    pyplot.subplot(131)
-    pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
-    pyplot.xlabel("Space", fontsize=12)
-    pyplot.ylabel("Time", fontsize=12)
-    pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
-    pyplot.plot(p,ts*10)
-    
-    pyplot.subplot(132)
-    pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPotPi.min(), vmax=harmPotPi.max()))
-    pyplot.xlabel("Space", fontsize=12)
-    pyplot.ylabel("Time", fontsize=12)
-    #pyplot.title("Relative phase {}".format(rel_phase2))
-    pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
-    
-    pyplot.subplot(133)
-    t=0
-    if velocity == 10:
-        t=16
-        pyplot.plot(difference[1500:2500,1600], color="#000099")
-    elif velocity == 20:
-        t=15.16
-        pyplot.plot(difference[1500:2500,1516], color="#000099")
-    pyplot.xlabel("Space", fontsize=12)
-    pyplot.xticks(np.array([0,500,1000]),[-5.0,0.0,5.0])
-    #pyplot.ylabel("Difference in " + r'$\psi^2$') # + "   " + r'$/10^{-5}$' if in units of 10^-5
-    #pyplot.yticks(np.array([-0.00001,0,0.00001]),np.array([-1,0,1]))
-    pyplot.title("Difference in "  + r'$\psi^2$' + " at t={}".format(t), fontsize=16)
-    
-    pyplot.savefig('difference-g8.png')
-    
-    
-    pyplot.show() 
+harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
 
-# pyplot.figure()
-# pyplot.imshow(np.transpose(schrodinger_time_evolution(soliton(0,0,0,family_param), V, -4*family_param)), extent=(-20,20,0,40), origin='lower', cmap='viridis')
-# pyplot.title("Harmonic potential on one soliton")
-#pyplot.savefig("harmonic_confinement-1soliton.png")
-# pyplot.show()
+########## PLOTS ############
+pyplot.figure() #figsize=(16,5)
+#pyplot.suptitle("g={}".format(g))
+
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=12)
+pyplot.ylabel("Time", fontsize=12)
+pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
+pyplot.plot(p,ts*10)
+
+pyplot.savefig('particle.png')
+pyplot.show() 

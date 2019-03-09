@@ -145,5 +145,5 @@ pyplot.xticks(np.array([0,500,1000,1500,2000]),np.array([-10.0,-5.0,0.0,5.0,10.0
 pyplot.title("Difference in "  + r'$\psi^2$' + " at t=10", fontsize=16)
 #pyplot.savefig('difference.png')
 
-pyplot.savefig('extensionpic.png')
+pyplot.savefig('extensionpic.png', bbox_inches='tight')
 pyplot.show()

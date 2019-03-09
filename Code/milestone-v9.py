@@ -76,14 +76,14 @@ def soliton(velocity):
 	psi_initial = (family_param/2)**0.5 * np.exp(1j*velocity*xs) / np.cosh(xs * family_param)
 	return psi_initial
 
-def accuracy_test(g_test,t):
-    #uses rectangle method 
-    psisquareds_test = schrodinger_time_evolution(soliton(0), 0, g_test)
+def accuracy_test(g,t):
+    #uses trapezium rule
+    psisquareds_test = schrodinger_time_evolution(soliton(0), 0, g)
     t = int(t/dt) #taking timestep into account and making sure it's an integer as it is used for indexing 
-    norm = np.sum(psisquareds_test[750:1250,:],0)*dt # sum over axis 0, e.g. space between -2 and 2, multiplied by dt as each point is multiplied by dt 
+    norm = np.trapz(psisquareds_test[750:1250,:],xs[750:1250],axis=0)
     #print "norm at 0: {}".format(norm[0])
     #print "norm at 1.999: {}".format(norm[t])
-    accuracy = abs(norm[0] - norm[t])*100/norm[0] #percentage change in norm 
+    accuracy = (norm[0] - norm[t])*100/norm[0] #percentage change in norm 
     return accuracy
 
 #tests
@@ -91,7 +91,7 @@ def accuracy_test(g_test,t):
 family_param = 1
 velocity = 1 #was 5/3 
 testpsi = schrodinger_time_evolution(soliton(velocity), 0, 0) #no nonlinear term 
-g_test = -0.025
+#g_test = -0.025
 g_test2 = -4*family_param 
 testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear interactions 
 
@@ -117,7 +117,7 @@ pyplot.imshow(np.transpose(testpsi2), extent=(-10,10,0,20), origin='lower', cmap
 pyplot.xlabel("Space", fontsize=12)
 pyplot.ylabel("Time", fontsize=12)
 pyplot.title(r'$g= {}$'.format(g_test2), fontsize=16)
-pyplot.plot(p,ts*10) #adding particle 
+#pyplot.plot(p,ts*10) #adding particle 
 
 pyplot.savefig('milestonepic.png')
 pyplot.show()
