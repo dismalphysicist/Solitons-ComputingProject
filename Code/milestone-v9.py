@@ -58,12 +58,19 @@ def particle_SHM(start, velocity, frequency):
 
 #global variables for extent of modelling 
 
-n_times = 2000 #number of timesteps (also number of x steps)
-dt = 0.001 #was 0.01
-xs = np.linspace(-10, 10, n_times)
-ts = np.linspace(0,2,n_times) 
-L = xs[-1] - xs[0] #box length 
+n_times = 2000
+dt = 0.001
+xs = np.linspace(-10,10,n_times)
+ts = np.linspace(0,2,n_times)
+L = xs[-1] - xs[0]
 dx = L/n_times
+
+n_times2 = 4000 #number of timesteps (also number of x steps)
+dt2 = 0.002 #was 0.01
+xs2 = np.linspace(-10, 10, n_times2)
+ts2 = np.linspace(0,2,n_times2) 
+L2 = xs2[-1] - xs2[0] #box length 
+dx2 = L2/n_times2
 
 
 
@@ -83,8 +90,22 @@ def accuracy_test(g,t):
     norm = np.trapz(psisquareds_test[750:1250,:],xs[750:1250],axis=0)
     #print "norm at 0: {}".format(norm[0])
     #print "norm at 1.999: {}".format(norm[t])
-    accuracy = (norm[0] - norm[t])*100/norm[0] #percentage change in norm 
+    accuracy = abs(norm[0] - norm[t])*100/norm[0] #percentage change in norm 
     return accuracy
+    
+def errors(gs):
+    errors = np.zeros(len(gs))
+    
+    for ig, g in enumerate(gs):
+        errors[ig] = accuracy_test(g, 1.999)
+        
+        if errors[ig] == 0:
+            if g != 4:
+                print "what the hell"
+            else:
+                print "noice work" 
+        
+    return errors
 
 #tests
 
@@ -95,7 +116,7 @@ testpsi = schrodinger_time_evolution(soliton(velocity), 0, 0) #no nonlinear term
 g_test2 = -4*family_param 
 testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear interactions 
 
-p = particle_SHM(0,velocity*10/5,0.000001)
+p = particle_SHM(0,velocity*10/5,0.000001) #effectively zero frequency to get approximation of zero potential and test function 
 
 #testing accuracy
 acc = accuracy_test(g_test2, 1.999)
@@ -120,4 +141,14 @@ pyplot.title(r'$g= {}$'.format(g_test2), fontsize=16)
 #pyplot.plot(p,ts*10) #adding particle 
 
 pyplot.savefig('milestonepic.png')
+pyplot.show()
+
+pyplot.figure()
+g_centre = -4
+range_g = 0.05
+n = 25
+gs = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
+
+pyplot.plot(gs, errors(gs))
+pyplot.savefig("errors")
 pyplot.show()
