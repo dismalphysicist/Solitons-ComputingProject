@@ -30,7 +30,7 @@ labelfont=bf]{caption}                      % Defines caption font size as 9pt a
 \pagestyle{fancy}                           % Insert header
 \renewcommand{\headrulewidth}{0pt}
 \lhead{L. P. Flower}                          % Your name
-\rhead{Investigating the properties of solitons in a water tank}            % Your report title               
+\rhead{Collisions of Matter-Wave Solitons in a Bose-Einstein Condensate}            % Your report title               
 
 \def\bibsection{\section*{References}}        % Position reference section correctly
 
@@ -39,10 +39,10 @@ labelfont=bf]{caption}                      % Defines caption font size as 9pt a
 \begin{document}                     
 
 
-\title{Numerical modelling of solitons in a Bose-Einstein condensate} 
+\title{Collisions of Matter-Wave Solitons in a Bose-Einstein Condensate} 
 \date{Submitted: \today{}}
 \author{L. P. Flower}
-\affiliation{\normalfont L3 Computing Project}
+\affiliation{\normalfont Durham University L3 Computing Project}
 
 \begin{abstract}              
  
@@ -56,9 +56,9 @@ In this report we investigate the relation between amplitude and speed for solit
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Introduction, Theory and Preliminary Results} \label{Intro}
+\section{Introduction and Theory} \label{Intro}
 
-In natural units and with rescaled length and time variables, the Schrodinger equation is dimensionless. Introducing an effective potential term $g |\psi|^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation 
+In natural units and with rescaled length and time variables, the Schrodinger equation is dimensionless. Introducing an effective potential term $g |\psi|^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation \cite{Gross} \cite{Pitaevskii}
 \begin{equation}
 i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + V \psi.
 \end{equation}
@@ -70,44 +70,39 @@ Define $\zeta$ as a parameter to characterise width, with units 1/length. We the
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
 Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=-4\zeta$. 
 
-The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. A Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and the number of atoms $N$ is 5000 per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{mg^2}$ which evaluates to 8.56 ns. 
+Describing the interparticle interaction by a pseudopotential approximation is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length, $a_s$. 
 
-Describing the interparticle interaction by a pseudopotential approximation is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length. 
+The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. If a Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and 5000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{10mg^2}$ which evaluates to 0.856 ns.
 
+The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretization effects. In order for this simulation to accurately represent an experiment, it must be run over a time period of at least a few milliseconds, corresponding to $\tilde{t}$ from 0 to 200,000. For the simulation to complete in a reasonable time, $\delta t \approx 100$ since the model is $O(1)$ complexity [is it?]. However, this would lead to inconsistencies in the model due to the presence of a harmonic confining potential in the case of repeated collisions, where a smaller timestep improves the integrability of the soliton solutions. A compromise has been reached in this model where $\delta t$ is small, but the extent of time is not comparable to real experiments in most cases. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Methods} \label{Methods}
 
+The split-step Fourier method is a mathematical trick borrowed from optics and relies on the fact that in Fourier space, the operator $\frac{d}{dx}$ becomes $k$, the transformed variable with units 1/length. Once the wavefunction has been propagated in k-space, the inverse Fourier transform is taken. The potential energy term is approximated as a product of two half-exponentials (this is inexact as the potential depends on $|\psi|^2$) which are incorporated in the wavefunction propagation. The wavefunction at a time $t+\delta t$ is then given by
 
-
-Solitary waves in water were first scientifically observed by John Scott Russell in 1834 \cite{Russell} after he saw one on a canal. They were later described mathematically by Korteweg and de Vries in terms of a nonlinear partial differential equation, known as the KdV equation \cite{KdV}. This description assumes small waves (compared to the depth of water), long waves (compared to the wave amplitude), and zero viscosity. The shape of solitary waves is given by a non-dispersive solution of the KdV equation: $\eta(x,t) = \eta_0 \sech^2([x-ct]/L)$, where $\eta$ is the vertical displacement of water, $\eta_0$ its maximum amplitude, $c$ the wave speed and $L$ the characteristic length of the wave. 
-
-Many scientists assumed that two colliding solitary waves would interact strongly due to their nonlinear nature and would destroy each other. When it was discovered that, in fact, they emerge from the collision with their shape unchanged, with only a small decrease in amplitude and a phase shift \cite{Segur}, these waves began to be called "solitons" - they collide and interact almost as if they were particles. 
-
-The solution to the KdV equation predicts that the velocity of solitons is given by
-\begin{equation} \label{SpeedEqn}
-c = \sqrt{gh} \left(1 + \frac{\eta}{2h} \right), %brackets sensible size because of \left and \right
+\begin{equation} \label{fft}
+\psi(x,t+\delta t) = e^{-\frac{i(V+g|\psi|^2 \delta t}{2}} \mathcal{F}^{-1}[e^{i(2\pi k)^2 \delta t} \mathcal{F} [e^{- \frac{i(V+g|\psi|^2) \delta t}{2}} \psi(x,t) ] ],
 \end{equation}
-where $g$ is the gravitational field strength, $h$ is the depth of water and $\eta$ is the soliton amplitude. Here $g$ is taken to be 9.81 ms$^{-1}$. In this report we describe a method to test the validity of the linear relationship between amplitude and speed. 
+where $V$, $g$ and $\psi$ are defined above in the Gross-Pitaevskii equation. 
 
-Any sufficiently localised initial disturbance in the water, no matter its shape, will evolve into one or more solitons and a following dispersive tail. This was shown in 1967 by solving the KdV equation analytically for an arbitrarily shaped local disturbance \cite{Gardner}. The number of solitons which evolve is given by the equation 
-\begin{equation} \label{Number}
-N = 1 + \Int{\left(\frac{S}{\pi}\right)},
-\end{equation}
-where $S = \left(\frac{3a}{2h}\right)^{1/2} \frac{\ell}{h}$ is a function of the initial disturbance width $\ell$, height $a$ and the water depth $h$. 'Int' here means 'integer part of'. We carried out a small experiment to verify this for a 3 m wave tank, using 8 different values of $a$, and in all cases achieved agreement with theory when the solitons were given sufficient time to emerge. $S/\pi$ even gave an indication as to the amplitude of the final soliton - values closer to the higher integer corresponded with a clearly defined final soliton while a very small final soliton occurred when $S/\pi$ was only just over the integer. This would suggest that despite the waves reflecting off the tank walls, often before the solitons were fully formed, the basic theoretical predictions of the KdV equation hold here. 
+The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fast Fourier Transform module \texttt{numpy.fft} was used to compute the discrete Fourier tranforms and inverses. 
 
-But how long do the solitons take to fully emerge from the initial bulge of water? By comparing the speeds of solitons with amplitudes $\eta_1$ and $\eta_2$, the separation distance
-\begin{equation} \label{SepDist}
-D_{sep} = \frac{4h^2}{\Delta \eta} \left(\frac{h}{3 \eta_0}\right)^{1/2}
-\end{equation}
-can be found, where $\eta_0$ is the average of $\eta_1$ and $\eta_2$ and $\Delta \eta = |\eta_1-\eta_2|$ is the difference in amplitudes. $h$, as usual, is the depth of water. For a typical $\eta_1$ = 2.5 cm and $\eta_2$ = 1 cm for primary and secondary solitons, for a water depth of $h$ = 5 cm we obtain $D_{sep}$ = 1.95 m. This suggests that our 3 m wave tank gives sufficient space for the solitons to evolve from the initial disturbance but doesn't leave much room for observations after that. As our observations agreed with this prediction, we let the solitons reflect off the tank wall at least once before taking velocity measurements. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Bettini et al. \cite{UGlab} described a method of measuring the amplitude of multiple solitary waves using two electrodes, one fixed in the tank and the other floating on the surface. Measuring the resistance between the two electrodes gives the amplitude of passing solitons. The advantage of this approach is that it can analyse the shape of solitons (provided they travel with constant speed), not only their speed-amplitude relation. It can therefore be used to measure the shapes of trains of solitons very easily, as produced by initial rectangular disturbances. We did not have access to this piece of equipment, instead using a visual approach: using a video camera to take a series of photos of the setup at known times. By finding the two photos where a soliton passes two reference points we calculated the time taken to traverse the distance, and hence the soliton velocity. 
+\section{Preliminary Results} \label{Milestone}
 
-Our aims in this investigation are to test the speed-amplitude relation for solitons by measuring speed and amplitude for solitons produced using a sluice gate, both with and without a reflection, and also to investigate the effect of reflections off the tank wall. By comparing the obtained speeds with the theoretical speed for a soliton we can deduce whether a reflection causes the wave to slow down or adds a 'pause' or phase shift. 
+ For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The norm $|\psi|^2$ was integrated over the interval $(-2,2)$, giving a probability leakage of 0.012\% over the extent of the experiment, $\tilde{t}$ from 0 to 20. 
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{milestonepic.png}
+\captionof{figure}{A graph showing the effect of inter-atom interactions $g |\psi|^2$ on a soliton model. The family 
+parameter $\zeta = 1$ hence $g=-4$ perfectly confines the soliton with velocity $v=0.2$.}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Methods} \label{Methods}
 
 
 To investigate the properties of solitary waves, we filled a wave tank with water and used a sluice to create solitons. The tank was 30 cm deep, 15.2 cm wide and 2.98 m long. We used a water depth of 8 cm, since to use the predictions of the KdV equation (see Section \ref{Intro}), the soliton amplitude must be significantly less than that of the water, but we found with a larger volume of water in the tank the waves were likely to spill over. We filled the sluice with water at depths between 10.5 cm and 14.5 cm to produce at least one visible soliton which endured long enough to take measurements. Rapidly removing the sluice gate leaves a rectangular disturbance in the tank, which evolves eventually into one or more solitons with different amplitudes and hence different speeds. 
@@ -133,6 +128,10 @@ As shown in Fig. \ref{Diagram2}, to measure properties of solitons undergoing co
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Results} \label{Results}
+
+\subsection{Collisions}
+
+\subsection{Repeated Collisions}
 
 \begin{figure}[h]
 %\includegraphics[width=\columnwidth]{noReflections-residuals.png}
@@ -211,17 +210,10 @@ If given more time to investigate solitons in water, we would use a longer wave 
 
 \begin{thebibliography}{}
 
-\bibitem{Russell} J. Scott Russell (1844), "Report on Waves", \textit{Report of British Association for the Advancement of Science} pp. 311-390. 
-
-\bibitem{KdV} D. J. Korteweg and G. de Vries (1895), "On the Change of Form...", \textit{Philosophical Magazine} \textbf{39}(240) pp. 422-443.
-
-\bibitem{Segur} H. Segur (1973), "The Korteweg de Vries equation and water waves, part 1", \textit{Journal of Fluid Mechanics} \textbf{59} pp. 721-736.
-
-\bibitem{Gardner} C. S. Gardner et al. (1967), "Method for Solving the Korteweg de Vries Equation", \textit{Physical Review Letters} \textbf{19}(19) pp. 1095-1097.
-
-\bibitem{UGlab} Alessandro Bettini et al. (1983), "Solitons in Undergraduate Laboratory", \textit{American Journal of Physics} \textbf{51}(11).
-
-\bibitem{Hughes} Ifan G. Hughes and Thomas P. A. Hase (2010), \textit{Measurements and their Uncertainties}.
+\bibitem{Gross} E. P. Gross (1961), "Structure of a quantised vortex in boson systems", \textit{Il Nuovo Cimento}, \textbf{20}(3) pp. 454-477. 
+\bibitem{Pitaevskii}  L. P. Pitaevskii (1961), "Vortex lines in an imperfect Bose gas", \textit{Sov. Phys. JETP.} \textbf{13}(2) pp. 451–454.
+\bibitem{Bound} N.-C. Panoiu, I. V. Mel’nikov, D. Mihalache, C. Etrich and F. Lederer (1999), "Multiwavelength pulse transmission in an optical fibre - Amplifier system", \textit{Phys. Rev.} \textbf{60}(4868).
+\bibitem{Adams} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). 
 
 \end{thebibliography} 
 
