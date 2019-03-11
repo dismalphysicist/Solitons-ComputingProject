@@ -37,9 +37,8 @@ def schrodinger_time_evolution(psi_initial, V, g):
 		
 		interactions = g * abs(psi)**2
 			
-		step1 = fourier_transform(np.exp(-1j*(V + interactions)*dt/2) * psi)
-		step2 = inverse_fourier(np.exp(-1j*ks**2*dt) * step1)
-		psi = np.exp(-1j*(V + interactions)*dt/2) * step2 
+		step1 = fourier_transform(np.exp(-1j*(V + interactions)*dt) * psi)
+		psi = inverse_fourier(np.exp(-1j*ks**2*dt) * step1)
 		
 		psisq = abs(psi)**2
 
