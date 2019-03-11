@@ -8,6 +8,10 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pyplot
 import matplotlib.colors as colors 
+import time 
+
+start = time.time() #initialising time 
+
 
 ############ FUNCTIONS #############
 
@@ -129,3 +133,5 @@ pyplot.plot(p,ts*10)
 
 pyplot.savefig('particle.png')
 pyplot.show() 
+
+print (time.time() - start), "s"

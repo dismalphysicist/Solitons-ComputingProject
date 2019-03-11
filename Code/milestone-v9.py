@@ -7,6 +7,9 @@ Version 5
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pyplot
+import time 
+
+start = time.time() #initialising time 
 
 
 def fourier_transform(f):
@@ -65,14 +68,6 @@ ts = np.linspace(0,2,n_times)
 L = xs[-1] - xs[0]
 dx = L/n_times
 
-n_times2 = 4000 #number of timesteps (also number of x steps)
-dt2 = 0.002 #was 0.01
-xs2 = np.linspace(-10, 10, n_times2)
-ts2 = np.linspace(0,2,n_times2) 
-L2 = xs2[-1] - xs2[0] #box length 
-dx2 = L2/n_times2
-
-
 
 #generate initial psi
 def gaussian():
@@ -122,7 +117,49 @@ p = particle_SHM(0,velocity*10/5,0.000001) #effectively zero frequency to get ap
 acc = accuracy_test(g_test2, 1.999)
 print "Norm is conserved to {} % accuracy".format(acc) 
 
-#to compare to analytic, use gaussian first. later, sech soliton and nonlinear. 
+
+do_errors = False
+
+if do_errors:
+    
+    g_centre = -4
+    range_g = 0.01
+    n = 25
+    gs = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
+    err_gs = errors(gs)
+
+    # REDEFINING GLOBAL VARIABLES 
+    n_times = 4000
+    dt = 0.002
+    xs = np.linspace(-10,10,n_times)
+    ts = np.linspace(0,2,n_times)
+    L = xs[-1] - xs[0]
+    dx = L/n_times
+    
+    g_centre = -4
+    range_g = 0.01
+    n = 25
+    gs2 = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
+    err_gs2 = errors(gs2)
+    
+    #plot with shared x axis and different y axes
+    fig, ax1 = pyplot.subplots()
+    ax1.plot(gs, err_gs, 'b-')
+    ax1.set_xlabel(r'$g$')
+    # Make the y-axis label, ticks and tick labels match the line color.
+    ax1.set_ylabel('Probability leakage with 2000x2000 points', color='b')
+    
+    ax2 = ax1.twinx()
+    ax2.plot(gs2, err_gs2, 'r-')
+    ax2.set_ylabel('Probability leakage with 4000x4000 points', color='r')
+    
+    fig.tight_layout()
+    pyplot.savefig("errors.png")
+    pyplot.show()
+
+
+
+####### PLOTS #######
 
 pyplot.figure(figsize=(10,6)) 
 #pyplot.suptitle("The effect of inter-atom interactions " + r'$g |\psi|^2$' + " on a soliton model", fontsize=16)	
@@ -143,12 +180,4 @@ pyplot.title(r'$g= {}$'.format(g_test2), fontsize=16)
 pyplot.savefig('milestonepic.png')
 pyplot.show()
 
-pyplot.figure()
-g_centre = -4
-range_g = 0.05
-n = 25
-gs = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
-
-pyplot.plot(gs, errors(gs))
-pyplot.savefig("errors")
-pyplot.show()
+print (time.time() - start), "s"
