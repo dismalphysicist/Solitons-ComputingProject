@@ -117,12 +117,12 @@ acc = accuracy_test(g_test2, 1.999)
 print "Norm is conserved to {} % accuracy".format(acc) 
 
 
-do_errors = False
+do_errors = True
 
 if do_errors:
     
     g_centre = -4
-    range_g = 0.01
+    range_g = 0.02
     n = 25
     gs = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
     err_gs = errors(gs)
@@ -136,7 +136,7 @@ if do_errors:
     dx = L/n_times
     
     g_centre = -4
-    range_g = 0.01
+    range_g = 0.02
     n = 25
     gs2 = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
     err_gs2 = errors(gs2)
