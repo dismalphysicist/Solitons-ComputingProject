@@ -50,7 +50,7 @@ def schrodinger_time_evolution(psi_initial, V, g):
 	return psisquareds
 	
 
-def particles(start, velocity, spring_constant, mass):
+def two_particles(start, velocity, spring_constant, mass):
     
     frequency = np.sqrt(spring_constant/mass)
     x = np.zeros(n_times)
@@ -64,9 +64,9 @@ def particles(start, velocity, spring_constant, mass):
 #global variables for extent of modelling 
 
 n_points = 4000 #number of x steps 
-n_times = 10000 #number of timesteps
+n_times = 4000 #number of timesteps
 dt = 0.001
-ts = np.linspace(0,10,n_times) 
+ts = np.linspace(0,4,n_times) 
 xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -84,6 +84,10 @@ def soliton(start, velocity, initial_phase, family_param): #frequency = 1
 	
 def two_solitons(x1,x2,v1,v2, phase1, phase2, family_param):
     psi_combined = soliton(x1,v1,phase1,family_param) + soliton(x2,v2,phase2,family_param) 
+    return psi_combined
+    
+def three_solitons(x1,x2,x3,v1,v2,v3,phase1,phase2,phase3, family_param):
+    psi_combined = soliton(x1,v1,phase1,family_param) + soliton(x2,v2,phase2,family_param) + soliton(x3,v3,phase3,family_param)
     return psi_combined
 
 #test accuracy of modelling with a special case
@@ -112,27 +116,21 @@ V = 1/2 * K * xs**2
 #zeroPot = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase1,0.5), 0, g) 
 #zeroPotPi = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase2,0.5), 0, g) 
 
-velocity = 10 #L/2 originally 
-
-#particle of mass 0.5
-p = particles(-4,20,K,0.5) #velocity scaling of 1/5 * 10 (10 from time scaling)
-q = particles(4,-20,K,0.5) 
+velocity = 10
 
 
-harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
+harmPot = schrodinger_time_evolution(three_solitons(-4,0,4,velocity,-velocity,velocity,0,rel_phase1,rel_phase1,family_param), V, g) 
 
 ########## PLOTS ############
-pyplot.figure(figsize=(5,15)) #figsize=(16,5)
+pyplot.figure() #figsize=(16,5)
 #pyplot.suptitle("g={}".format(g))
 
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,100), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,40), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=12)
 pyplot.ylabel("Time", fontsize=12)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
-pyplot.plot(p,ts*10)
-pyplot.plot(q,ts*10)
 
-pyplot.savefig('particles.png')
+#pyplot.savefig('particle.png')
 pyplot.show() 
 
 print (time.time() - start), "s"

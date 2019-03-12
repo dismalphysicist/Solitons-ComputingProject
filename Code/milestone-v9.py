@@ -77,29 +77,19 @@ def soliton(velocity):
 	psi_initial = (family_param/2)**0.5 * np.exp(1j*velocity*xs) / np.cosh(xs * family_param)
 	return psi_initial
 
-def accuracy_test(g,t):
+def accuracy_test(g,t,range_x,n_times,dt,dx):
     #uses trapezium rule
     psisquareds_test = schrodinger_time_evolution(soliton(0), 0, g)
+    
     t = int(t/dt) #taking timestep into account and making sure it's an integer as it is used for indexing 
-    norm = np.trapz(psisquareds_test[750:1250,:],xs[750:1250],axis=0)
-    #print "norm at 0: {}".format(norm[0])
-    #print "norm at 1.999: {}".format(norm[t])
+    x_low = int(n_times/2 - range_x/(2*dx))
+    x_high = int(n_times/2 + range_x/(2*dx))
+    
+    norm = np.trapz(psisquareds_test[x_low:x_high,:],xs[x_low:x_high],axis=0)
+
     accuracy = abs(norm[0] - norm[t])*100/norm[0] #percentage change in norm 
     return accuracy
-    
-def errors(gs):
-    errors = np.zeros(len(gs))
-    
-    for ig, g in enumerate(gs):
-        errors[ig] = accuracy_test(g, 1.999)
-        
-        if errors[ig] == 0:
-            if g != 4:
-                print "what the hell"
-            else:
-                print "noice work" 
-        
-    return errors
+
 
 #tests
 
@@ -113,7 +103,7 @@ testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear 
 p = particle_SHM(0,velocity*10/5,0.000001) #effectively zero frequency to get approximation of zero potential and test function 
 
 #testing accuracy
-acc = accuracy_test(g_test2, 1.999)
+acc = accuracy_test(g_test2,1.999,4,n_times,dt,dx)
 print "Norm is conserved to {} % accuracy".format(acc) 
 
 
@@ -125,32 +115,63 @@ if do_errors:
     range_g = 0.02
     n = 25
     gs = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
-    err_gs = errors(gs)
-
+    
+    err_gs = np.zeros(len(gs))
+    
+    for ig, g in enumerate(gs):
+        err_gs[ig] = accuracy_test(g,ts[-2],5,n_times,dt,dx)
+    
+    # # REDEFINING GLOBAL VARIABLES 
+    # n_times = 4000
+    # dt = 0.001
+    # xs = np.linspace(-10,10,n_times) 
+    # ts = np.linspace(0,4,n_times)
+    # L = xs[-1] - xs[0]
+    # dx = L/n_times #SMALLER dx, dt STAYS THE SAME
+    # 
+    # g_centre = -4
+    # range_g = 0.02
+    # n = 25
+    # gs2 = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
+    # 
+    # err_gs2 = np.zeros(len(gs))
+    # 
+    # for ig, g in enumerate(gs):
+    #     err_gs2[ig] = accuracy_test(g,ts[-2],5,n_times,dt,dx)
+    
     # REDEFINING GLOBAL VARIABLES 
-    n_times = 4000
-    dt = 0.002
-    xs = np.linspace(-10,10,n_times)
-    ts = np.linspace(0,2,n_times)
+    n_times = 6000
+    dt = 0.001
+    xs = np.linspace(-10,10,n_times) 
+    ts = np.linspace(0,6,n_times)
     L = xs[-1] - xs[0]
-    dx = L/n_times
+    dx = L/n_times #SMALLER dx, dt STAYS THE SAME
     
     g_centre = -4
     range_g = 0.02
     n = 25
-    gs2 = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
-    err_gs2 = errors(gs2)
+    gs3 = np.linspace(g_centre - range_g/2, g_centre + range_g/2, n)
+    
+    err_gs3 = np.zeros(len(gs))
+    
+    for ig, g in enumerate(gs):
+        err_gs3[ig] = accuracy_test(g,ts[-2],5,n_times,dt,dx)
+    
     
     #plot with shared x axis and different y axes
     fig, ax1 = pyplot.subplots()
-    ax1.plot(gs, err_gs, 'b-')
+    ax1.plot(gs, err_gs, 'b.-')
     ax1.set_xlabel(r'$g$')
     # Make the y-axis label, ticks and tick labels match the line color.
     ax1.set_ylabel('Probability leakage with 2000x2000 points', color='b')
     
-    ax2 = ax1.twinx()
-    ax2.plot(gs2, err_gs2, 'r-')
-    ax2.set_ylabel('Probability leakage with 4000x4000 points', color='r')
+    # ax2 = ax1.twinx()
+    # ax2.plot(gs2, err_gs2, 'm.-')
+    # ax2.set_ylabel('Probability leakage with 4000x4000 points', color='m')
+    
+    ax3 = ax1.twinx()
+    ax3.plot(gs3, err_gs3, 'm.-')
+    ax3.set_ylabel('Probability leakage with 6000x6000 points', color='m')
     
     fig.tight_layout()
     pyplot.savefig("errors.png")
