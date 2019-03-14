@@ -59,7 +59,7 @@ In this report we investigate the relation between amplitude and speed for solit
 \section{Introduction and Theory} \label{Intro}
 
 In natural units and with rescaled length and time variables, the Schrodinger equation is dimensionless. Introducing an effective potential term $g |\psi|^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation \cite{Gross} \cite{Pitaevskii}
-\begin{equation}
+\begin{equation} \label{GPE}
 i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + V \psi.
 \end{equation}
 
@@ -73,6 +73,15 @@ Substituting the $v=0$ case into the time-independent Schrodinger equation and s
 Describing the interparticle interaction by a pseudopotential approximation is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length, $a_s$. 
 
 %The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. If a Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and 5000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{10mg^2}$ which evaluates to 0.856 ns.
+
+We define a characteristic soliton length $\xi = \frac{\hbar^2}{mg}$ for convenience. Using the transformations 
+\begin{equation} \label{transforms}
+x = \tilde{x} \frac{\xi}{\sqrt{2}}, \quad		 t = \tilde{t} \frac{m \xi^2}{\hbar}, 	\quad \tilde{\psi} = \sqrt{\xi} \psi 
+\end{equation}
+%\quad inserts quadruple space
+to rescale quantities in the nonlinear Schr\"{o}dinger equation, we obtain the Gross-Pitaevskii equation in its dimensionless form (Eqn. \ref{GPE}). On length scales longer than $\xi$, atoms move collectively (as a recognisable soliton) while on shorter length scales, they behave as free particles. 
+
+[no paragraph break?] To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m.
 
 The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretization effects. %In order for this simulation to accurately represent an experiment, it must be run over a time period of at least a few milliseconds, corresponding to $\tilde{t}$ from 0 to 200,000. For the simulation to complete in a reasonable time, $\delta t \approx 100$ since the model is $O(1)$ complexity [is it?]. However, this would lead to inconsistencies in the model due to the presence of a harmonic confining potential in the case of repeated collisions, where a smaller timestep improves the integrability of the soliton solutions. A compromise has been reached in this model where $\delta t$ is small, but the extent of time is not comparable to real experiments in most cases. 
 
@@ -93,7 +102,7 @@ The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fa
 
 \section{Preliminary Results} \label{Milestone}
 
- For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The norm $|\psi|^2$ was integrated over the interval $(-2,2)$, giving a probability leakage of 0.012\% over the extent of the experiment, $\tilde{t}$ from 0 to 20. 
+ For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The norm $|\psi|^2$ was integrated over the interval $(-2.5,2.5)$, giving a probability leakage of 0.009\% over the extent of the experiment, $\tilde{t}$ from 0 to 20. 
 
 \begin{figure}[h]
 \includegraphics[width=\columnwidth]{milestonepic.png}
