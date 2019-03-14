@@ -103,7 +103,7 @@ testpsi2 = schrodinger_time_evolution(soliton(velocity), 0, g_test2) #nonlinear 
 p = particle_SHM(0,velocity*10/5,0.000001) #effectively zero frequency to get approximation of zero potential and test function 
 
 #testing accuracy
-acc = accuracy_test(g_test2,1.999,4,n_times,dt,dx)
+acc = accuracy_test(g_test2,1.999,5,n_times,dt,dx)
 print "Norm is conserved to {} % accuracy".format(acc) 
 
 
@@ -159,21 +159,30 @@ if do_errors:
     
     
     #plot with shared x axis and different y axes
-    fig, ax1 = pyplot.subplots()
-    ax1.plot(gs, err_gs, 'b.-')
-    ax1.set_xlabel(r'$g$')
-    # Make the y-axis label, ticks and tick labels match the line color.
-    ax1.set_ylabel('Probability leakage with 2000x2000 points', color='b')
+    # fig, ax1 = pyplot.subplots()
+    # ax1.plot(gs, err_gs, 'b.-')
+    # ax1.set_xlabel(r'$g$')
+    # # Make the y-axis label, ticks and tick labels match the line color.
+    # ax1.set_ylabel('Probability leakage with 2000x2000 points', color='b')
+    # 
+    # # ax2 = ax1.twinx()
+    # # ax2.plot(gs2, err_gs2, 'm.-')
+    # # ax2.set_ylabel('Probability leakage with 4000x4000 points', color='m')
+    # 
+    # ax3 = ax1.twinx()
+    # ax3.plot(gs3, err_gs3, 'm.-')
+    # ax3.set_ylabel('Probability leakage with 6000x6000 points', color='m')
+    # 
+    # fig.tight_layout()
     
-    # ax2 = ax1.twinx()
-    # ax2.plot(gs2, err_gs2, 'm.-')
-    # ax2.set_ylabel('Probability leakage with 4000x4000 points', color='m')
+    #plot on same axes 
+    pyplot.figure()
+    pyplot.plot(gs, err_gs, 'b.-')
+    pyplot.plot(gs3, err_gs3, 'm.-')
+    pyplot.xlabel(r'$g$')
+    pyplot.ylabel("Probability leakage")
+    pyplot.legend(["2000x2000 points", "6000x6000 points"])
     
-    ax3 = ax1.twinx()
-    ax3.plot(gs3, err_gs3, 'm.-')
-    ax3.set_ylabel('Probability leakage with 6000x6000 points', color='m')
-    
-    fig.tight_layout()
     pyplot.savefig("errors.png")
     pyplot.show()
 

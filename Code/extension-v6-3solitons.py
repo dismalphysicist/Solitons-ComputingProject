@@ -119,7 +119,7 @@ V = 1/2 * K * xs**2
 velocity = 10
 
 
-harmPot = schrodinger_time_evolution(three_solitons(-4,0,4,velocity,-velocity,velocity,0,rel_phase1,rel_phase1,family_param), V, g) 
+harmPot = schrodinger_time_evolution(three_solitons(-4,0,4,velocity,-velocity,velocity,0,rel_phase2,rel_phase2,family_param), V, g) 
 
 ########## PLOTS ############
 pyplot.figure() #figsize=(16,5)
