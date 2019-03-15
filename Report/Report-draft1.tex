@@ -58,28 +58,30 @@ In this report we investigate the relation between amplitude and speed for solit
 
 \section{Introduction and Theory} \label{Intro}
 
-In natural units and with rescaled length and time variables, the Schrodinger equation is dimensionless. Introducing an effective potential term $g |\psi|^2$ which characterises the interactions between the particles, we find the Gross-Pitaevskii equation \cite{Gross} \cite{Pitaevskii}
-\begin{equation} \label{GPE}
-i \frac{\partial \psi}{\partial t} = -\frac{\partial^2 \psi}{\partial x^2} + V \psi.
+First, an effective potential term $g |\psi|^2$  is introduced into the Schr\"{o}dinger equation to characterise the interactions between the particles. This is called the nonlinear Schr\"{o}dinger equation and is given by 
+\begin{equation} \label{NLSE}
+i \hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m} \frac{\partial^2 \psi}{\partial x^2} + (V+g |\psi|^2) \psi,
 \end{equation}
+where $V$ is the external potential and $|\psi|^2$ represents the density of particles. $\psi$ is normalised such that the integral over all space gives $N$, the number of particles in the soliton system. Describing the interparticle interaction by the pseudopotential approximation $g |\psi|^2$ is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length, $a_s$. 
 
-Define $\zeta$ as a parameter to characterise width, with units 1/length. We then have the normalised wavefunction 
-\begin{equation} 
-\psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i v x + \phi},
-\end{equation}
-where $v$ is the velocity of the soliton and $\phi$ is a phase factor. 
-Substituting the $v=0$ case into the time-independent Schrodinger equation and setting E to be $\zeta^2$, we find $g=-4\zeta$. 
-
-Describing the interparticle interaction by a pseudopotential approximation is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length, $a_s$. 
-
-%The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. If a Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and 5000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{10mg^2}$ which evaluates to 0.856 ns.
-
-We define a characteristic soliton length $\xi = \frac{\hbar^2}{mg}$ for convenience. Using the transformations 
+However, the length scales of the simulation must also be such that the individual behaviour of atoms in the solitons is not of interest. A characteristic soliton length $\xi$ can be defined such that on length scales longer than $\xi$, atoms move collectively (as a recognisable soliton) while on shorter length scales, they behave as free particles \cite{}. Here the soliton length is defined as $\xi = \frac{\hbar^2}{mg}$. Using the transformations 
 \begin{equation} \label{transforms}
-x = \tilde{x} \frac{\xi}{\sqrt{2}}, \quad		 t = \tilde{t} \frac{m \xi^2}{\hbar}, 	\quad \tilde{\psi} = \sqrt{\xi} \psi 
+x = \tilde{x} \frac{\xi}{\sqrt{2}}, \quad		 t = \tilde{t} \frac{m \xi^2}{\hbar}, 	\quad \psi = \tilde{\psi} \frac{1}{\sqrt{\xi}}
 \end{equation}
 %\quad inserts quadruple space
-to rescale quantities in the nonlinear Schr\"{o}dinger equation, we obtain the Gross-Pitaevskii equation in its dimensionless form (Eqn. \ref{GPE}). On length scales longer than $\xi$, atoms move collectively (as a recognisable soliton) while on shorter length scales, they behave as free particles. 
+to rescale quantities in the nonlinear Schr\"{o}dinger equation, the Gross-Pitaevskii equation (GPE) in its dimensionless form is obtained \cite{Gross} \cite{Pitaevskii}
+\begin{equation} \label{GPE}
+i \frac{\partial \tilde{\psi}}{\partial \tilde{t}} = -\frac{\partial^2 \tilde{\psi}}{\partial \tilde{x}^2} + (\tilde{V}+g |\tilde{\psi}|^2) \tilde{\psi},
+\end{equation}
+where the tilde symbols denoting the transformed quantities are omitted for the rest of this report, for clarity of reading. 
+
+The integrable solutions to the Gross-Pitaevskii equation are $\sech$ solitons. A parameter to characterise width, $\zeta$, can be defined with units 1/length. The normalised initial wavefunction is then 
+\begin{equation} 
+\psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i (v x + \phi)},
+\end{equation}
+where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition.  
+
+%The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. If a Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and 5000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{10mg^2}$ which evaluates to 0.856 ns.
 
 [no paragraph break?] To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m.
 
