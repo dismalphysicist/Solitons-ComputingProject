@@ -81,11 +81,9 @@ The integrable solutions to the Gross-Pitaevskii equation are $\sech$ solitons. 
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition.  
 
-%The rescaled length and time depend on the parameters of the experimental system which is modelled by the simulation. If a Bose-Einstein condensate of Rubidium-87 atoms has been chosen, with a scattering length of $a_s = 100 a_0$ and 5000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is 800 Hz. The interaction parameter $g = 2\hbar \omega_r a_s N$ is then 4.44 \e{-34} kg m$^3$s$^{-2}$, leading to a characteristic soliton length $\tilde{x}$ which we define as the unit of rescaled length. $\tilde{x} = \frac{\hbar^2}{mg}$ where $m$ is the mass of each $^{87}$Rb atom. For this imaginary but realistic experimental setup, $\tilde{x} = $ 17.1 nm. To ensure that the Schrodinger equation is dimensionless, the unit of time must be $\tilde{t} = \frac{\hbar^3}{10mg^2}$ which evaluates to 0.856 ns.
+To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. The unit of time is equal to 0.0107 s. 
 
-[no paragraph break?] To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m.
-
-The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretization effects. %In order for this simulation to accurately represent an experiment, it must be run over a time period of at least a few milliseconds, corresponding to $\tilde{t}$ from 0 to 200,000. For the simulation to complete in a reasonable time, $\delta t \approx 100$ since the model is $O(1)$ complexity [is it?]. However, this would lead to inconsistencies in the model due to the presence of a harmonic confining potential in the case of repeated collisions, where a smaller timestep improves the integrability of the soliton solutions. A compromise has been reached in this model where $\delta t$ is small, but the extent of time is not comparable to real experiments in most cases. 
+The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretisation effects. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -100,6 +98,8 @@ where $V$, $g$ and $\psi$ are defined above in the Gross-Pitaevskii equation.
 
 The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fast Fourier Transform module \texttt{numpy.fft} was used to compute the discrete Fourier tranforms and inverses. 
 
+Accuracy test description here?
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Preliminary Results} \label{Milestone}
@@ -108,38 +108,20 @@ The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fa
 
 \begin{figure}[h]
 \includegraphics[width=\columnwidth]{milestonepic.png}
-\captionof{figure}{A graph showing the effect of inter-atom interactions $g |\psi|^2$ on a soliton model. The family 
+\caption{A graph showing the effect of inter-atom interactions $g |\psi|^2$ on a soliton model. The family 
 parameter $\zeta = 1$ hence $g=-4$ perfectly confines the soliton with velocity $v=0.2$.}
 \end{figure}
 
-\begin{figure}[h]
+Since there was a small amount of probability leakage with $g=-4$, values of $g$ in a small range $\Delta g = 0.01$ either side of the theoretical value were investigated. The accuracy test was run on each, for a space-time box of 2000x2000 points ($x \in [-10,10]$, $t \in [0,2]$) and 6000x6000 points ($x \in [-10,10]$, $t \in [0,6]$). The results are plotted in Fig. \ref{errorsfig}. 
+
+\begin{figure}[h] 
 \includegraphics[width=\columnwidth]{errors.png}
-\captionof{figure}{A comparison of the optimal value of $g$, found from the minimum probability leakage, using a discrete space-time grid of 2000x2000 points (blue) compared to 6000x6000 points (magenta). The optimal $g$ value is closer to -4 when space and time more closely approximate a continuum.}
+\caption{A comparison of the optimal value of $g$, found from the minimum probability leakage, using a discrete space-time grid of 2000x2000 points (blue) compared to 6000x6000 points (magenta). The optimal $g$ value is closer to -4 when space and time more closely approximate a continuum.}
+\label{errorsfig}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As you can see, when the discretisation of space is improved from 2000 points to 6000 points the probability leakage is smaller, for almost every value of $g$ considered. More notably, the interaction parameter with the minimum error in a 2000x2000 box is around $g \approx -4.0025$, whereas for 6000 space points the optimal value is around $g \approx -4.001$. This is significantly closer to the theoretical prediction of -4, agreeing with the hypothesis [state somewhere] that the slight disagreement with theory is due to the discretisation of space and possibly time. 
 
-
-
-To investigate the properties of solitary waves, we filled a wave tank with water and used a sluice to create solitons. The tank was 30 cm deep, 15.2 cm wide and 2.98 m long. We used a water depth of 8 cm, since to use the predictions of the KdV equation (see Section \ref{Intro}), the soliton amplitude must be significantly less than that of the water, but we found with a larger volume of water in the tank the waves were likely to spill over. We filled the sluice with water at depths between 10.5 cm and 14.5 cm to produce at least one visible soliton which endured long enough to take measurements. Rapidly removing the sluice gate leaves a rectangular disturbance in the tank, which evolves eventually into one or more solitons with different amplitudes and hence different speeds. 
-
-\begin{figure}[h]
-%\includegraphics[width=\columnwidth]{diagram1-NoReflections.png}
-\caption{The experimental setup for measuring the speed of solitons with no reflections involved.}
-\label{Diagram1}
-\end{figure}
-
-As you can see in Fig. \ref{Diagram1}, a camera was set up near the equipment so as to be able to see both vertical rulers, which formed the start and end points of the velocity measurement and were 1.5 m apart. From this distance it was not possible to see the dark metal rulers, so we marked the tank to compare with the wave amplitude. After the sluice gate was removed, the camera began recording and each frame was associated with the time it was taken. The first few seconds of frames were not analysed, as the solitons had not completely evolved and their shape was still changing. The photos which showed a fully formed primary soliton travelling between the two rulers were analysed and the mean soliton speed over that distance calculated.
-
-Soliton amplitude gradually decreases as a result of energy lost in collisions with the tank walls, so we repeated the measurement at later times on the same soliton. As its amplitude decreased, its speed decreased and so we assumed these were valid measurements, equivalent to producing new solitons using a smaller volume of water in the sluice. By repeating this process with differing volumes of water in the sluice, we obtained repeats for most soliton amplitudes (measured to the nearest 0.25 cm) and took the weighted mean of the velocites.
-
-\begin{figure}[h]
-%\includegraphics[width=\columnwidth]{diagram2-Reflections.png}
-\caption{The setup for observing the reflections of solitons off the wave tank wall.}
-\label{Diagram2}
-\end{figure}
-
-As shown in Fig. \ref{Diagram2}, to measure properties of solitons undergoing collisions with the tank wall, we again used a vertically placed ruler both to measure amplitude and to provide a reference point for measuring distances, and hence speed. The distance between the left-hand edge of the ruler and the wall of the wave tank was 0.49 m. The method for taking measurements was very similar to the case with no reflection: the time between the soliton passing the ruler travelling to the left, and then travelling to the right, was found using the photos taken by the camera, and hence the speed calculated. Our hypothesis was that a soliton would 'pause' on reflection, described mathematically as acquiring a phase shift, before travelling back at the same speed. Testing this was complicated by the fact that the soliton amplitude often decreased after the reflection as a result of lost energy (since the water viscosity is obviously non-zero). In this case, theoretically the soliton should emerge from the collision travelling at a slower speed. By using the speed data as measured without reflections, we can evaluate the importance of each effect. If we compare the expected time elapsed, had the collision with the tank wall only affected the soliton's amplitude, with the actual time elapsed as measured by the camera, we can evaluate whether the phase shift hypothesis is correct. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
