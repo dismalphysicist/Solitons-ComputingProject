@@ -81,30 +81,28 @@ The integrable solutions to the Gross-Pitaevskii equation are $\sech$ solitons. 
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition.  
 
-To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. The unit of time is equal to 0.0107 s. 
-
-The Gross-Pitaevskii equation was solved numerically using the split-step Fourier method for rescaled time $t$. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretisation effects. 
+To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. In the graphs in this report, the unit of time has also been multiplied by 10 to improve readability. The unit of time displayed on graphs is then equal to 0.00107 s, so the simulation was run for at least 0.0214 s and up to 0.107 s. Most experiments are run over the course of $\sim$ 35 ms, around the same order of magnitude as this computational model. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Methods} \label{Methods}
 
-The split-step Fourier method is a mathematical trick borrowed from optics and relies on the fact that in Fourier space, the operator $\frac{d}{dx}$ becomes $k$, the transformed variable with units 1/length. Once the wavefunction has been propagated in k-space, the inverse Fourier transform is taken. The potential energy term is approximated as a product of two half-exponentials (this is inexact as the potential depends on $|\psi|^2$) which are incorporated in the wavefunction propagation. The wavefunction at a time $t+\delta t$ is then given by
+The split-step Fourier method is a mathematical trick borrowed from optics and relies on the fact that in Fourier space, the operator $\frac{d}{dx}$ becomes $k$, the transformed variable with units 1/length. The wavefunction is multiplied by a small nonlinear step in the form of the exponential of the potential multiplied by $\delta t$. It is then Fourier transformed and multiplied by the kinetic energy factor in terms of $k$. Once the wavefunction has been propagated in k-space, the inverse Fourier transform is taken. The wavefunction at a time $t+\delta t$ is then given by
 
 \begin{equation} \label{fft}
-\psi(x,t+\delta t) = e^{-\frac{i(V+g|\psi|^2 \delta t}{2}} \mathcal{F}^{-1}[e^{ik^2 \delta t} \mathcal{F} [e^{- \frac{i(V+g|\psi|^2) \delta t}{2}} \psi(x,t) ] ],
+\psi(x,t+\delta t) = \mathcal{F}^{-1}[e^{ik^2 \delta t} \mathcal{F} [e^{-i(V+g|\psi|^2) \delta t} \psi(x,t) ] ],
 \end{equation}
 where $V$, $g$ and $\psi$ are defined above in the Gross-Pitaevskii equation. 
 
-The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fast Fourier Transform module \texttt{numpy.fft} was used to compute the discrete Fourier tranforms and inverses. 
+The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fast Fourier Transform module \texttt{numpy.fft} was used to compute the discrete Fourier tranforms and inverses. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretisation effects. 
 
-Accuracy test description here?
+An accuracy test function was written to integrate $|\psi|^2$ over a given range of $x$ and compare the initial norm to that at a time $t$. The function \texttt{numpy.trapz} was used to numerically integrate using the trapezium rule, which is a good approximation as $\delta x$ was small (0.01 in the case of repeated collisions). This gives a measure of the probability leakage which occurred during propagation, which is related to the numerical limits of the split-step Fourier method and the discretisation of space and time. The $x$ limits were taken to be well within the box, to avoid discontinuity errors at the edges. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Preliminary Results} \label{Milestone}
 
- For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The norm $|\psi|^2$ was integrated over the interval $(-2.5,2.5)$, giving a probability leakage of 0.009\% over the extent of the experiment, $\tilde{t}$ from 0 to 20. 
+ For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The accuracy test described in Section \ref{Methods} was run over the interval $x \in (-2.5,2.5)$, giving a probability leakage of 0.009\% over the extent of the experiment, $t$ from 0 to 20. 
 
 \begin{figure}[h]
 \includegraphics[width=\columnwidth]{milestonepic.png}
@@ -129,13 +127,13 @@ As you can see, when the discretisation of space is improved from 2000 points to
 
 \subsection{Collisions}
 
-\subsection{Repeated Collisions}
-
 \begin{figure}[h]
-%\includegraphics[width=\columnwidth]{noReflections-residuals.png}
-\caption{The green points with error bars show the measured velocity of solitons plotted against their measured amplitude, and the black line shows the best fit to these points. The orange area shows the theoretical velocity prediction for that amplitude, with the associated error. The normalised residuals of the data to the fit are plotted below.}
-\label{Graph1}
+\includegraphics[width=\columnwidth]{extensionpic2.png}
+\caption{Collisions between two solitons of equal family parameter.}
+\label{collision}
 \end{figure}
+
+\subsection{Repeated Collisions}
 
 We begin by considering the velocity measurements taken over a single length of the wave tank. The data were plotted in Fig. \ref{Graph1}, and a straight-line fit obtained using weighted least squares. The best-fit gradient, $a$, was 3.2 $\pm$ 0.3 s$^{-1}$, the best-fit intercept, $b$, was 0.913 $\pm$ 0.004 m s$^{-1}$ and the minimised $\chi^2$ value was 22.8. As there were nine data points and two fit parameters, $\nu$ = 7 and hence the reduced chi-squared $\chi_\nu^2$ was found to be 3.3. 
 
