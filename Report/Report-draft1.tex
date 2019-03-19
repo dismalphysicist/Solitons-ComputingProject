@@ -46,7 +46,7 @@ labelfont=bf]{caption}                      % Defines caption font size as 9pt a
 
 \begin{abstract}              
  
-In this report we investigate the relation between amplitude and speed for solitary waves in water, given by $c = \sqrt{gh} \left(1 + \frac{\eta}{2h} \right)$. Measurements were taken visually in a 3 m wave tank, and a straight-line fit for the data was produced with $\chi_\nu^2$ = 3.3, showing a poor fit. The best-fit gradient and intercept values did not agree well with the theoretical predictions either, leading to a discussion of the experimental limitations. We also investigated the properties of soliton reflection and concluded that a phase shift is not observed in this situation, contrary to what might be expected, but that energy is lost in reflection and hence the soliton amplitude and speed decrease. 
+ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT 
 
 \end{abstract}
 
@@ -76,12 +76,18 @@ i \frac{\partial \tilde{\psi}}{\partial \tilde{t}} = -\frac{\partial^2 \tilde{\p
 where the tilde symbols denoting the transformed quantities are omitted for the rest of this report, for clarity of reading. 
 
 The integrable solutions to the Gross-Pitaevskii equation are $\sech$ solitons. A parameter to characterise width, $\zeta$, can be defined with units 1/length. The normalised initial wavefunction is then 
-\begin{equation} 
+\begin{equation} \label{soliton}
 \psi(x) = \sqrt{\frac{\zeta}{2}} \sech{(\zeta x)} e^{i (v x + \phi)},
 \end{equation}
-where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition.  
+where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition. It is predicted that if the value of $g$ found to confine the soliton in this simulation differs from $-4\zeta$, it is due to the treatment of space and time as discrete variables rather than continuous. 
 
 To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. In the graphs in this report, the unit of time has also been multiplied by 10 to improve readability. The unit of time displayed on graphs is then equal to 0.00107 s, so the simulation was run for at least 0.0214 s and up to 0.107 s. Most experiments are run over the course of $\sim$ 35 ms, around the same order of magnitude as this computational model. 
+
+The name 'solitons' for solitary waves originates from the fact that their dynamics are (largely) unchanged after collisions with other solitons, playing on the usual nomenclature for particles where their names end in '-on'. Throughout the history of solitons, in both water and optical systems, a classical particle model has been useful for describing their motion in applications where the details of collisions are unimportant. An interpretation (?) of the particle model for matter-wave solitons in Bose-Einstein condensates was developed recently \cite{Martin}. The particles are placed in the same external potential $V$ as the solitons, and an effective inter-soliton potential 
+\begin{equation}
+V(q_j - q_k) = -\eta \sech^2{\eta(q_j - q_k)}
+\end{equation}
+is a valid approximation far from collision sites when the solitons have equal effective masses $\eta$. $q_i$ is the position of soliton $i$ as a function of time. However, this inter-soliton potential is extremely weak compared to even the weak harmonic confining potential. As a result it can be approximated as zero for a certain length of time; the validity of this approximation will be investigated in this project. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -96,13 +102,17 @@ where $V$, $g$ and $\psi$ are defined above in the Gross-Pitaevskii equation.
 
 The discrete $k$ values are found from $\delta k = \frac{1}{n \delta x}$. The Fast Fourier Transform module \texttt{numpy.fft} was used to compute the discrete Fourier tranforms and inverses. The space-time box was initially 20x20 for the purpose of obtaining preliminary results, and was increased to 40x40 for repeated collisions. Initially 2000, then 4000 space points and 4000 time points were used to minimise discretisation effects. 
 
-An accuracy test function was written to integrate $|\psi|^2$ over a given range of $x$ and compare the initial norm to that at a time $t$. The function \texttt{numpy.trapz} was used to numerically integrate using the trapezium rule, which is a good approximation as $\delta x$ was small (0.01 in the case of repeated collisions). This gives a measure of the probability leakage which occurred during propagation, which is related to the numerical limits of the split-step Fourier method and the discretisation of space and time. The $x$ limits were taken to be well within the box, to avoid discontinuity errors at the edges. 
+An accuracy test function was written to integrate $|\psi|^2$ over a given range of $x$ and compare the initial norm to that at a time $t$. This is evaluated for the case where the soliton has zero velocity and hence is localised over the same range of $x$ throughout the simulation. The function \texttt{numpy.trapz} was used to numerically integrate using the trapezium rule, which is a good approximation as $\delta x$ was small (0.01 in the case of repeated collisions). This gives a measure of the probability leakage which occurred during propagation, which is related to the numerical limits of the split-step Fourier method and the discretisation of space and time. The $x$ limits were taken to be well within the box, to avoid discontinuity errors at the edges. 
+
+The extension to two (or more) solitons was trivial: the initial wavefunction became a sum of the individual soliton wavefunctions. This had the effect of reducing the effective soliton mass from 1 to $1/N$ where N is the number of solitons. The only difference is that with more than one soliton, the relative phase between the solitons must be specified in the case that they collide. The phase of a soliton, while an integral part of its wave nature, does not affect its dynamics at all and is only important at the point of collision with another soliton. The first soliton was implemented with phase $\phi = 0$ in Eqn. \ref{soliton} above, and subsequent solitons were given a constant relative phase $\phi=\Delta \phi$. In this investigation, only pairs (or triples) of solitons with the same family parameter $\zeta_i=\zeta_j$ have been considered. This is realistic, since all solitons formed in a homogeneous Bose-Einstein condensate will have the same family parameter as it depends on the strength of the interactions between atoms, $g$. For simplicity, we have also only considered solitons with the same speed $|v_i| = |v_j|$. In an experiment the soliton velocities can be tuned by the experimenter. 
+
+The idea of modelling solitons as classical particles originates in optics but was explored in matter-wave solitons by Martin et al. \cite{Martin}. In this project, the approximation of solitons as emerging completely unchanged from collisions was investigated by using a particle model with no inter-soliton potential. Particles were introduced into the same harmonic potential as the solitons and hence underwent simple harmonic motion about the centre of mass at $x=0$. For 2 solitons, the particles were each given mass 0.5 to agree with the soliton masses as described above ($1/N$ where $N=2$), so that both wave solitons and particles behaved identically in the harmonic trap. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Preliminary Results} \label{Milestone}
 
- For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The accuracy test described in Section \ref{Methods} was run over the interval $x \in (-2.5,2.5)$, giving a probability leakage of 0.009\% over the extent of the experiment, $t$ from 0 to 20. 
+ For $\zeta=1$, it was found by trial and error that $g=-4$ confined the soliton, in perfect agreement with theory. The accuracy test described in Section \ref{Methods} was run over the interval $x \in (-2.5,2.5)$, giving a probability leakage of 0.009\% over the extent of the experiment, $t$ from 0 to 20. This result is within the goal of this model of keeping probability leakage under 0.01\%. 
 
 \begin{figure}[h]
 \includegraphics[width=\columnwidth]{milestonepic.png}
@@ -118,7 +128,7 @@ Since there was a small amount of probability leakage with $g=-4$, values of $g$
 \label{errorsfig}
 \end{figure}
 
-As you can see, when the discretisation of space is improved from 2000 points to 6000 points the probability leakage is smaller, for almost every value of $g$ considered. More notably, the interaction parameter with the minimum error in a 2000x2000 box is around $g \approx -4.0025$, whereas for 6000 space points the optimal value is around $g \approx -4.001$. This is significantly closer to the theoretical prediction of -4, agreeing with the hypothesis [state somewhere] that the slight disagreement with theory is due to the discretisation of space and possibly time. 
+As you can see, when the discretisation of space is improved from 2000 points to 6000 points the probability leakage is smaller, for almost every value of $g$ considered. More notably, the interaction parameter with the minimum error in a 2000x2000 box is around $g \approx -4.0025$, whereas for 6000 space points the optimal value is around $g \approx -4.001$. This is significantly closer to the theoretical prediction of -4, agreeing with the hypothesis (see section \ref{Intro}) that the slight disagreement with theory is due to the discretisation of space and possibly time. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,80 +137,33 @@ As you can see, when the discretisation of space is improved from 2000 points to
 
 \subsection{Collisions}
 
-\begin{figure}[h]
-\includegraphics[width=\columnwidth]{extensionpic2.png}
-\caption{Collisions between two solitons of equal family parameter.}
+Two solitons were created at positions symmetric about zero and given equal and opposite velocities to cause them to collide roughly halfway through the time period modelled, as described in section \ref{Methods}. The resulting dynamics were plotted for different values of the interaction parameter $g$, two of which are plotted below (see Fig.\ref{collision}). For small negative values of $g$, the family parameter is small so the solitons are initially fairly diffuse. They therefore produce a large interference pattern when they collide, but emerge with their velocities and relative phase unchanged. Large negative $g$ values and hence very narrow solitons have counterintuitive collision properties, seeming to 'bounce off' one another when in antiphase. This is due to the wave properties of the condensate and is not indicative of the constituent atoms actually undergoing elastic collisions. For relative phases of $\pi/2$ and $3\pi/2$ the interference pattern is asymmetric (see Fig.\ref{asymmetric}), retaining the appearance of solitons bouncing off one another but with one soliton heavily weighted in amplitude. 
+
+\begin{figure*}[h!]
+\includegraphics[width=\textwidth]{extensionpic.png}
+\caption{A series of graphs showing the collisions of two solitons with speed $|v|=2/3$. Subplots (a)-(c) relate to solitons with $\zeta=0.5$ and subplots (d)-(f) relate to solitons with $\zeta=4$. In plots (a) and (d), the solitons are in phase. In plots (b) and (e) they are in antiphase. Plots (c) and (f) show more clearly the difference between in-phase and antiphase collisions.}
 \label{collision}
-\end{figure}
+\end{figure*}
+
+\begin{figure*}[h]
+\includegraphics[width=\textwidth]{asymmetrical_collision.png}
+\caption{A series of graphs showing the collisions of two solitons with $\zeta=4$ and speed $|v|=2/3$. In subplot (a), the solitons have a relative phase of $\pi/2$. In plot (b) they have a relative phase of $3\pi/2$. Plot (c) shows the difference between these two cases.}
+\label{asymmetric}
+\end{figure*}
 
 \subsection{Repeated Collisions}
 
-We begin by considering the velocity measurements taken over a single length of the wave tank. The data were plotted in Fig. \ref{Graph1}, and a straight-line fit obtained using weighted least squares. The best-fit gradient, $a$, was 3.2 $\pm$ 0.3 s$^{-1}$, the best-fit intercept, $b$, was 0.913 $\pm$ 0.004 m s$^{-1}$ and the minimised $\chi^2$ value was 22.8. As there were nine data points and two fit parameters, $\nu$ = 7 and hence the reduced chi-squared $\chi_\nu^2$ was found to be 3.3. 
 
-
-Next, we look at the second experimental setup, involving solitons approaching the wave tank wall, reflecting off it and travelling away again, sometimes with significantly reduced amplitude and speed. We know from previous research and the KdV equation that solitons undergoing overtaking collisions emerge unscathed except for a slightly reduced amplitude and a phase shift, advancing the faster wave and retarding the slower \cite{Segur}. We aimed to investigate whether a similar mechanism applies to a soliton reflecting off a wall, in effect colliding head-on with itself. 
-
-\begin{figure}[h]
-%\includegraphics[width=\columnwidth]{reflections-residuals.png}
-\caption{The green points show the measured speed of solitons, including the reflection, plotted against their initial measured amplitude. The orange area, as before, shows the theoretical velocity prediction for that amplitude with its error.}
-\label{Graph2}
-\end{figure}
-
-After repeat readings were collated it became clear that one data point was anomalous: its measured velocity was more than 10\% larger than the theoretical velocity for the measured amplitude. Also, the error in speed was $\approx$10\%, compared to errors of 2-4\% for every other data point. This point was therefore omitted from Fig. \ref{Graph2} and from the gradient, intercept and $\chi^2$ calculations. 
-
-A weighted least-squares fit was used to find the best-fit gradient, $a$ = 4.1 $\pm$ 0.1 s$^{-1}$ and the intercept, $b$ = 0.856 $\pm$ 0.002 m s$^{-1}$. With these values of $a$ and $b$, $\chi^2_{min}$ = 1.8. There were seven data points, so $\chi_\nu^2$ = 0.37. For a good fit we would expect  $\chi_\nu^2 \approx$ 1, so in this case the errors in velocity have been overestimated. Looking at the graph, we can see that all the data points are fairly near the line of best fit, but their errors are large, so all points are within one standard error bar of the best fit line (rather than two-thirds of the points as would be expected). It may have been beneficial to obtain repeated observations of the same wave, to reduce the error on the time measurement. However, this would only work if the observations agreed, otherwise combining them does not improve the overall result. This is not guaranteed as there is evidence for subjectivity in the visual method of measuring time differences.
-
-Despite the low chi-squared value, the strong straight-line fit with speed values lower than those predicted suggests that the reflection has a definite effect on the soliton, even though it does not destroy it nor even change its shape. The possible effects we have considered are a decrease in amplitude resulting in a lower speed and an imparted phase shift delaying the soliton’s return. 
-
-To try to quantify the effect of reflection on a soliton's speed, we can look back at the non-reflecting speed data. As well as calculating the speed of solitons travelling across the tank, the method of data collection meant that we could measure the time taken for the wave to reflect off the tank wall between measurements. We can also calculate the time we would expect this to take, if indeed the reflection is like that of waves on a string at open boundaries: distance to the tank wall divided by speed travelling to the left, plus distance back again divided by speed travelling to the right. By observing the difference between these times, we can conclude whether reflection imparts a phase shift, and hence a retarding time shift, on solitons. 
-
-Table \ref{Table} below shows the results of inferring the time shift which occurred in the solitons produced as they reflected off the wave tank wall. In the table, $t_0$ is the expected time elapsed between passing a reference point before and after the reflection, if only soliton speed was affected; $t_m$ is the actual (measured) time elapsed and $t_m - t_0$ is the difference between them - the time shift. 
-
-\begin{figure}[h!]
-\begin{tabular}{| c | c | c |} % three centre-justified columns
-\hline
-$t_0$ /s & $t_m$ /s & $t_m - t_0$ /s $\pm$ 0.04 s \\ \hline
-4.599	& 4.761 		& 0.162 \\ \hline
-4.538	& 4.599 		& 0.061 \\ \hline
-4.717	& 4.679		& -0.038 \\ \hline
-4.481	& 4.520		& 0.039 \\ \hline
-4.539	& 4.561		& 0.022 \\ \hline
-4.720	& 4.602		& -0.118 \\ \hline
-4.386	& 4.459		& 0.073 \\ \hline
-4.601	& 4.562		& -0.039 \\
-\hline
-\end{tabular}
-\caption{A table showing time shifts in solitons after reflection off a tank wall. The error in each time difference is 0.04 s.}
-\label{Table}
-\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Discussion} 
 
-The gradient obtained for speed-amplitude data as plotted in Fig. \ref{Graph1} was 3.2 $\pm$ 0.3 s$^{-1}$, which is lower than the theoretical gradient of $\sqrt{g/4h} =$ 5.54 $\pm$ 0.03 s$^{-1}$. They differ by more than 3 standard error bars, which indicates disagreement with theory \cite{Hughes}. In this section we will consider reasons for the disagreement including suitability of the equipment, experimental practice and analysis techniques. 
+\subsection{Collisions}
 
-The intercept was found to be 0.913 $\pm$ 0.004 m s$^{-1}$, slightly higher than the theoretical value of 0.886 $\pm$ 0.006 m s$^{-1}$. The values differ by less than 3 standard errors, so there is clearly some agreement. The weak agreement could be a result of a too-low gradient, as the speeds were approximately correct compared to the theoretical predictions at the amplitude values considered. For lower amplitude solitons, which we could not accurately describe here because they were hard to see, lower speeds might be observed which could correct the gradient. Also, the intercept could easily be influenced by mistakes in amplitude measurement, so we calculated the amplitude underestimation which would completely account for the too-high intercept here as around 0.7 cm. This is much larger than the precision in amplitude, so mistakes cannot completely account for the difference. 
+At first glance, the two phase cases for $\zeta=0.5$ (see Fig.\ref{collision} subplots (a) and (b)) look very similar. In reality, where the solitons are in phase at the time of collision there is a central bright fringe in the interference pattern, as opposed to a central dark fringe in the antiphase case. Subplot (c) is included to illustrate this, showing the difference $\psi_0^2 - \psi_{\pi}^2$ at the time of collision. 
 
-As stated in section \ref{Results}, the reduced chi-squared $\chi_\nu^2$ = 3.3 for this dataset. As this is greater than 3, we say that the straight-line model is a poor fit for the data. Furthermore, calculating the P-value gives $P$ = 0.002 $\approx 10^{-3}$. In this case the hypothesis that the speed-amplitude data fits a straight line must be questioned, but not rejected outright. However, there is no apparent structure in the residuals except that more points are above the line of best fit than below it. There is no obvious correction to the model here, but it seems that the two points with small velocity error lying below the theoretical prediction have had their error underestimated. This analysis suggests that the model is fundamentally correct but that the experiment described in this report had too many sources of unaccounted error, both systematic and statistical, to demonstrate the model properly.
-
-The errors on the data points are far from equal, as some values of amplitude had only one set of data whereas others had three or four. This was due to using the same solitons at different points in their lifetimes rather than systematically repeating measurements. For certain amplitudes all repeats yielded similar speed values, whereas others differed greatly, and it would have been beneficial to collect more data on these if we had had time. Imaging and analysing these situations in detail might have revealed situations in which the model of solitary waves is not valid, such as when many background ripples are present in the tank. However, it is also possible that the measurement becomes more imprecise as soliton amplitude increases since larger solitons lose energy faster, meaning a constant uncertainty in amplitude measurement is not appropriate. 
-
-Disturbances in the wave tank are hard to correct for - including situations where the primary soliton, which is being observed, reflects off the tank wall and immediately collides with the secondary soliton which travels more slowly. It is as yet unclear what happens to the speed of a soliton during a head-on collision because their amplitudes momentarily increase, but since solitons colliding head-on are not described by a single KdV equation, the linear relationship between velocity and amplitude may not hold. Factors such as these could explain why the speed-amplitude graph had a lower gradient than expected and did not precisely follow a straight-line fit. 
-
-A large problem we faced when visually analysing data, particularly with reference to time measurements, was subjectivity. Whilst looking at photos together the experimentalists nearly always agreed on the time at which a soliton passed a reference point, but when analysis was done separately, and the results compared, there were often disagreements larger than the estimated error. Additionally, any outsiders looking at the same camera frames were likely to come to different conclusions. We can see especial evidence of subjectivity and bias when looking at Fig. \ref{Graph2}. The almost-constant offset of the data from the theoretical prediction points to a systematic overestimation of the time taken, which could have been amplified by the fact that in this setup (see Fig. \ref{Diagram2}) the same reference point was used twice. Additionally, we did not ensure that the camera was pointed exactly orthogonally to the direction of wave travel, neglecting the effect of decreased depth perception when looking at a photo. The effect appears to be less in Fig. \ref{Graph1} because two separate reference points were used, meaning that a bias in a particular direction was likely to be cancelled out by the same bias in the second measurement. 
-
-The time shift values in the table in section \ref{Results} are not all positive, suggesting the possibility that the observed time shifts are in fact a random distribution centred on zero. We can test this using a hypothesis test: the null hypothesis is that the time shifts are normally distributed with a mean of zero. We take the mean of our sample of 8 measurements, $\overline{\rm \Delta t}$ = 0.0199 s and find the probability of a mean value at least as extreme as this being found by chance. We find $P(\overline{\rm \Delta t} \geq $ 0.0199$) =$ 0.409 by normalising to the standard normal distribution, using the sample standard deviation. This is only an approximate test as the distribution standard deviation would ideally be known, and the sample standard deviation found from it by dividing by the square root of the number of measurements. Even if this is only approximately correct, a P-value of 0.409 is sufficiently high that there is no evidence to support rejecting the null hypothesis. Hence, we cannot infer from this data that the mean phase shift imparted during soliton reflection is anything other than zero. 
-
-We can conclude from this investigation that a reflection off a tank wall does not affect a soliton in the same way as undergoing an overtaking collision, and a phase shift is not observed. We can then ask why we see such low apparent velocities when a reflection is present (see Fig. \ref{Graph2}). One explanation is subjectivity, as described above. However, we must also consider that the solitons lose energy in collision and that this reduces their amplitude and, if they continue to obey the speed-amplitude relation, their speed. We have plotted the initial soliton amplitude, so perhaps a less extreme deviation from theory would be observed had we taken the average of the initial and final values. 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Conclusions}
- 
-In conclusion, a more precise setup would be required to accurately study the properties of solitons in a wave tank. The errors associated with multiple waves being produced and interacting with each other are mostly unaccounted for here, because the methods of data collection were too subjective and the precision was too low to correct for these errors. However, we can say that reflecting off a tank wall does not impart a large phase shift onto a soliton, as might be expected if the process was similar to overtaking waves. 
-
-If given more time to investigate solitons in water, we would use a longer wave tank (at least 6 m) with a pebble slope to absorb waves before they reflect and interact with following solitons, as described by Bettini et al. \cite{UGlab}. To study collisions between solitons we would need two sluices in the wave tank, as producing multiple solitons using a paddle did not yield useful results. A computer simulation of soliton reflection and collision may allow us to make better predictions about the outcome and find the best way to verify these experimentally. Finally, a pair of electrodes to be immersed in water would greatly improve the precision of amplitude measurement and allow us to study solitons of smaller amplitude, where the KdV equation has higher validity. 
+When narrow solitons collide (see Fig.\ref{collision} subplots (d) and (e)), the resulting interference resembles a particle-particle interaction, especially in the antiphase case. However, the strong interactions seem to have caused an attractive force between the solitons as evidenced by the final separation of $\Delta x = 9$ compared to the initial separation of $\Delta x=12$. This result is somewhat unexpected as solitons should not affect each other even under collisions. It is possible that the solitons were not well-separated so formed a short-lived 'bound state' \cite{Bound}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -208,27 +171,15 @@ If given more time to investigate solitons in water, we would use a longer wave 
 
 \bibitem{Gross} E. P. Gross (1961), "Structure of a quantised vortex in boson systems", \textit{Il Nuovo Cimento}, \textbf{20}(3) pp. 454-477. 
 \bibitem{Pitaevskii}  L. P. Pitaevskii (1961), "Vortex lines in an imperfect Bose gas", \textit{Sov. Phys. JETP.} \textbf{13}(2) pp. 451–454.
-\bibitem{Bound} N.-C. Panoiu, I. V. Mel’nikov, D. Mihalache, C. Etrich and F. Lederer (1999), "Multiwavelength pulse transmission in an optical fibre - Amplifier system", \textit{Phys. Rev.} \textbf{60}(4868).
-\bibitem{Adams} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). 
+\bibitem{Bound} N.-C. Panoiu, I. V. Mel’nikov, D. Mihalache, C. Etrich and F. Lederer (1999), "Multiwavelength pulse transmission in an optical fibre - Amplifier system", \textit{Phys. Rev.} \textbf{60}(4868). %cite if bound state mentioned
+\bibitem{Martin} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). %cite if particle model mentioned 
 
 \end{thebibliography} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Appendix: Error Analysis} \label{Errors}
+\section{Appendix: Code Fragments} \label{Appendix}
 
-In the preliminary investigation into the number of solitons which evolved from an initial rectangular disturbance, the Int function means that an error on the number of solitons cannot be found in the usual sense. Instead, we used the functional approach \cite{Hughes} to calculate the error in $S$ from the errors in $\ell$, $a$ and $h$ (which were all estimated as 1 mm). We then calculated the number of solitons which would emerge for the minimum and maximum possible values of $S$ within its error, giving a minimum and maximum number of solitons which were expected to emerge. In seven out of eight cases the minimum, predicted and maximum numbers were the same. 
-
-The error on the depth of water was taken to be 1 mm, the smallest division on the ruler it was measured with. The error on the wave height was estimated as 2.5 mm. The resolution of the camera was limited so we could only read ruler divisions 5 mm apart, but visual estimation allowed us to distinguish between wave heights which differed by half a division. The error in the amplitude was then found by adding in quadrature the errors in depth and overall wave height. 
-
-When visually analysing the photos of the wave tank we used the camera's measurement of the time to see when the wave crest crossed a reference point. If two photos were roughly equally close to this moment, the error on the time was taken as half the difference in these two times. If not, the error was taken as a quarter of the difference between the photo immediately after the crossing moment and the photo before (to avoid any directional bias). The error in the time difference was then found by the sum in quadrature of the errors in each time measurement. 
-
-The error in the distance travelled by the wave was taken to be only 1 mm, as we measured this carefully multiple times. Any uncertainty in the position of the wave relative to the reference points is encapsulated in the time error rather than the distance. The error in wave velocity follows simply from these: using the multiplication/division formula \cite{Hughes}, $\alpha_v = v \sqrt{(\alpha_x/x)^2 + (\alpha_t/t)^2}$. 
-
-We calculated the theoretical soliton velocity from the measured amplitude using equation \ref{SpeedEqn}, and evaluated the error using the functional approach, adding the contributions from errors in depth and amplitude (since both appear directly in the equation) in quadrature \cite{Hughes}. In a similar way, we evaluated the errors on the theoretical gradient, $\sqrt{g/4h}$ and intercept, $\sqrt{gh}$ using the functional approach to propagate the error in depth. 
-
-The error on the gradient and intercept of each speed-amplitude graph was found from the minimised $\chi^2$ fit. Contours of $\chi^2$ were plotted in 2-dimensional parameter space and the error on the parameters taken to be the distance from the solution to the extrema of the $\chi^2+1$ contour. 
-
-To estimate the error on the measured time shifts as set out in table \ref{Table}, we simply took the recording time of the camera and divided by the total number of frames, which gives the average error in a time measurement, then multiplied by $\sqrt{2}$ to obtain the error in a time difference. 
+The particle model was implented as follows... [include?]
 
 \end{document}
