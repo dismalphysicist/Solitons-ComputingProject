@@ -97,17 +97,17 @@ difference2 = testpsi3 - testpsi4
 
 ########## PLOTS ############
 
-pyplot.figure(figsize=(8,16)) #figsize=(14,10) 
+pyplot.figure(figsize=(14,10)) #figsize=(14,10) 
 #pyplot.suptitle("The effect of inter-atom interactions " + r'$g |\psi|^2$' + " on a soliton model", fontsize=16)	
 
-pyplot.subplot(321)
+pyplot.subplot(231)
 pyplot.imshow(np.transpose(testpsi), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
 #pyplot.savefig('rel_phase_0.png')
  
-pyplot.subplot(323)
+pyplot.subplot(232)
 pyplot.imshow(np.transpose(testpsi2), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
@@ -115,21 +115,21 @@ pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
 #pyplot.savefig('rel_phase_pi.png')
 
 #one minus the other to show where fringes are 
-pyplot.subplot(325)
+pyplot.subplot(233)
 pyplot.plot(difference1[:,900], color="#000099")
 pyplot.xlabel("Space", fontsize=14)
 pyplot.xticks(np.array([0,500,1000,1500,2000]),np.array([-10.0,-5.0,0.0,5.0,10.0]))
 pyplot.title("Difference in "  + r'$\psi^2$' + " at t=9", fontsize=16)
 #pyplot.savefig('difference.png')
 
-pyplot.subplot(322)
+pyplot.subplot(234)
 pyplot.imshow(np.transpose(testpsi3), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space", fontsize=14) 
 pyplot.ylabel("Time", fontsize=14)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
 #pyplot.savefig('rel_phase_0.png')
  
-pyplot.subplot(324)
+pyplot.subplot(235)
 pyplot.imshow(np.transpose(testpsi4), extent=(-10,10,0,20), origin='lower', cmap='viridis') 
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
@@ -137,7 +137,7 @@ pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
 #pyplot.savefig('rel_phase_pi.png')
 
 #one minus the other to show where fringes are 
-pyplot.subplot(326)
+pyplot.subplot(236)
 pyplot.plot(difference2[:,1000], color="#000099")
 pyplot.xlabel("Space", fontsize=14)
 pyplot.xticks(np.array([0,500,1000,1500,2000]),np.array([-10.0,-5.0,0.0,5.0,10.0]))

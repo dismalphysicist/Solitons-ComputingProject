@@ -65,8 +65,8 @@ def particles(start, velocity, spring_constant, mass):
 
 n_points = 4000 #number of x steps 
 n_times = 15000 #number of timesteps
-dt = 0.001
-ts = np.linspace(0,15,n_times) 
+dt = 0.01
+ts = np.linspace(0,150,n_times) 
 xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -106,7 +106,7 @@ rel_phase1 = 0
 rel_phase2 = np.pi
 
 #weak axial harmonic confining potential (assume radial confinement perfect, so 1D motion)
-K = 1*(2*np.pi/4)**2 #m w^2 characterises strength of harmonic potential, mass of soliton = 1
+K = 1*(2*np.pi/4)**2 #m w^2 characterises strength of harmonic potential, w=2pi * 0.25, mass of soliton = 1
 V = 1/2 * K * xs**2
 
 #zeroPot = schrodinger_time_evolution(two_solitons(-6,6,L/6,-L/6,0,rel_phase1,0.5), 0, g) 
@@ -115,8 +115,8 @@ V = 1/2 * K * xs**2
 velocity = 10 #L/2 originally 
 
 #particle of mass 0.5
-p = particles(-4,20,K,0.5) #velocity scaling of 1/5 * 10 (10 from time scaling)
-q = particles(4,-20,K,0.5) 
+p = particles(-4,velocity*2,K,0.5) #velocity scaling of 1/5 * 10 (10 from time scaling)
+q = particles(4,-velocity*2,K,0.5) 
 
 
 harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
@@ -125,7 +125,7 @@ harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_
 pyplot.figure(figsize=(5,15)) #figsize=(16,5)
 #pyplot.suptitle("g={}".format(g))
 
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,150), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,1500), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=12)
 pyplot.ylabel("Time", fontsize=12)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
