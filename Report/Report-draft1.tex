@@ -27,6 +27,7 @@ labelfont=bf]{caption}                      % Defines caption font size as 9pt a
 
 \usepackage{fancyhdr}
 
+
 \pagestyle{fancy}                           % Insert header
 \renewcommand{\headrulewidth}{0pt}
 \lhead{L. P. Flower}                          % Your name
@@ -58,13 +59,15 @@ ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT ABSTRACT
 
 \section{Introduction and Theory} \label{Intro}
 
-First, an effective potential term $g |\psi|^2$  is introduced into the Schr\"{o}dinger equation to characterise the interactions between the particles. This is called the nonlinear Schr\"{o}dinger equation and is given by 
+Solitary waves or solitons occur in systems where non-linear effects exactly cancel the dispersion of a wave packet, meaning it propagates without changing its shape. Even after collisions with other solitons, these waves emerge with their velocities and shapes unchanged, though a phase shift is imparted to both solitons. Non-linear wave systems are found in water waves, optical fibres and atomic Bose-Einstein condensates (BECs). The latter are described to a good approximation by the non-linear Schr\"{o}dinger equation when the radial confinement of the BEC is good enough that the motion is approximately one-dimensional. 
+
+To describe the behaviour of a Bose-Einstein condensate, an effective potential term $g |\psi|^2$  is introduced into the Schr\"{o}dinger equation to characterise the interactions between the constituent particles. The resulting non-linear Schr\"{o}dinger equation is given by 
 \begin{equation} \label{NLSE}
 i \hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar^2}{2m} \frac{\partial^2 \psi}{\partial x^2} + (V+g |\psi|^2) \psi,
 \end{equation}
 where $V$ is the external potential and $|\psi|^2$ represents the density of particles. $\psi$ is normalised such that the integral over all space gives $N$, the number of particles in the soliton system. Describing the interparticle interaction by the pseudopotential approximation $g |\psi|^2$ is valid in the dilute limit, where the average spacing between gas particles is greater than the scattering length, $a_s$. 
 
-However, the length scales of the simulation must also be such that the individual behaviour of atoms in the solitons is not of interest. A characteristic soliton length $\xi$ can be defined such that on length scales longer than $\xi$, atoms move collectively (as a recognisable soliton) while on shorter length scales, they behave as free particles \cite{}. Here the soliton length is defined as $\xi = \frac{\hbar^2}{mg}$. Using the transformations 
+However, the length scales of the simulation must also be such that the individual behaviour of atoms in the solitons is not of interest. A characteristic soliton length $\xi$ can be defined such that on length scales longer than $\xi$, atoms move collectively (as a recognisable soliton) while on shorter length scales, they behave as free particles. Here the soliton length is defined as $\xi = \frac{\hbar^2}{mg}$ \cite{Cornish}. Using the transformations \cite{Transforms} 
 \begin{equation} \label{transforms}
 x = \tilde{x} \frac{\xi}{\sqrt{2}}, \quad		 t = \tilde{t} \frac{m \xi^2}{\hbar}, 	\quad \psi = \tilde{\psi} \frac{1}{\sqrt{\xi}}
 \end{equation}
@@ -81,13 +84,15 @@ The integrable solutions to the Gross-Pitaevskii equation are $\sech$ solitons. 
 \end{equation}
 where $v$ is the velocity of the soliton and $\phi$ is a phase factor. In order for the soliton to propagate without change of shape, it is required that $g=-4\zeta$. This is found by substituting the $v=0$ case into the time-independent nonlinear dimensionless Schr\"{o}dinger equation and setting $E$ to be $\zeta^2$ to find the stationary-state condition. It is predicted that if the value of $g$ found to confine the soliton in this simulation differs from $-4\zeta$, it is due to the treatment of space and time as discrete variables rather than continuous. 
 
-To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, with a scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton. The radial confinement frequency $\omega_r$, which has been ignored in the computational part of this project to reduce the problem to 1D, is $2\pi \times 17.5$ Hz. $|g| = 2\hbar \omega_r |a_s| N$ is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. In the graphs in this report, the unit of time has also been multiplied by 10 to improve readability. The unit of time displayed on graphs is then equal to 0.00107 s, so the simulation was run for at least 0.0214 s and up to 0.107 s. Most experiments are run over the course of $\sim$ 35 ms, around the same order of magnitude as this computational model. 
+The solutions to the GPE come in two forms. If the interactions are repulsive, i.e. the scattering length between atoms is positive, the interaction parameter $g$ is positive and hence the solutions are 'dark solitons': atom density minima which move without changing shape. But if the interactions are attractive (negative scattering length), the solutions are bright matter-wave solitons with negative $g$, where the centre of a soliton corresponds to a maximum atomic density. In this report we will consider bright solitons only. These can be produced either with a BEC of atoms with an intrinsic negative scattering length, or by tuning the interactions using a Feshbach resonance \cite{Feshbach}. 
+
+To check that the length scales of this simulation are suitable for modelling solitons as a collective, we express the interaction parameter $g$ in terms of the parameters of the experimental system. A Bose-Einstein condensate of Rubidium-85 atoms hs been chosen, which has an intrinsic scattering length of $a_s = -0.6$ nm and 2000 atoms per soliton \cite{ExpParams}. The radial confinement, which has been assumed to be perfect in the computational part of this project to reduce the problem to 1D, has frequency $\omega_r = 2\pi \times 17.5$ Hz. Note however that the 1D axial confinement, if present, is explicitly dealt with in this simulation. $|g| = 2\hbar \omega_r |a_s| N$ \cite{Cornish} is then equal to $2.78 \e{-38}$ kg m$^3$ s$^{-2}$. This implies $\xi = 2.82 \mu$m. A single unit of rescaled length is equivalent to $\xi/\sqrt{2} = 1.99 \mu$m and box lengths between 20 and 40 rescaled space units are used in this model, hence the length scales are suitable for modelling the behaviour of solitons. In the graphs in this report, the unit of time has also been multiplied by 10 to improve readability. The unit of time displayed on graphs is therefore equal to 0.00107 s, so the simulation was run for at least 0.0214 s and up to 0.128 s. Most experiments are run over the course of $\sim$ 35 ms, around the same order of magnitude as this computational model. 
 
 The name 'solitons' for solitary waves originates from the fact that their dynamics are (largely) unchanged after collisions with other solitons, playing on the usual nomenclature for particles where their names end in '-on'. Throughout the history of solitons, in both water and optical systems, a classical particle model has been useful for describing their motion in applications where the details of collisions are unimportant. An interpretation (?) of the particle model for matter-wave solitons in Bose-Einstein condensates was developed recently \cite{Martin}. The particles are placed in the same external potential $V$ as the solitons, and an effective inter-soliton potential 
 \begin{equation}
 V(q_j - q_k) = -\eta \sech^2{\eta(q_j - q_k)}
 \end{equation}
-is a valid approximation far from collision sites when the solitons have equal effective masses $\eta$. $q_i$ is the position of soliton $i$ as a function of time. However, this inter-soliton potential is extremely weak compared to even the weak harmonic confining potential. As a result it can be approximated as zero for a certain length of time; the validity of this approximation will be investigated in this project. 
+is a valid approximation when the solitons have equal effective masses $\eta$. $q_i$ is the position of soliton $i$ as a function of time. This potential does not describe the interference effects produced when solitons collide, since classical particles do not exhibit wave-like properties, so it is only a good descriptor away from collision sites. But for soliton separations greater than $2/\eta$, the attractive potential is extremely weak. As a result, if the average soliton separation is greater than $2/\eta$, the inter-soliton potential can be approximated as zero. This will not allow for the formation of bound states of particles \cite{Bound} and will have impacts on the frequency of collisions when the particles are confined in a harmonic trap. The validity of this approximation will be investigated in this project. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -139,13 +144,13 @@ As you can see, when the discretisation of space is improved from 2000 points to
 
 Two solitons were created at positions symmetric about zero and given equal and opposite velocities to cause them to collide roughly halfway through the time period modelled, as described in section \ref{Methods}. The resulting dynamics were plotted for different values of the interaction parameter $g$, two of which are plotted below (see Fig.\ref{collision}). For small negative values of $g$, the family parameter is small so the solitons are initially fairly diffuse. They therefore produce a large interference pattern when they collide, but emerge with their velocities and relative phase unchanged. Large negative $g$ values and hence very narrow solitons have counterintuitive collision properties, seeming to 'bounce off' one another when in antiphase. This is due to the wave properties of the condensate and is not indicative of the constituent atoms actually undergoing elastic collisions. For relative phases of $\pi/2$ and $3\pi/2$ the interference pattern is asymmetric (see Fig.\ref{asymmetric}), retaining the appearance of solitons bouncing off one another but with one soliton heavily weighted in amplitude. 
 
-\begin{figure*}[h!]
+\begin{figure*}
 \includegraphics[width=\textwidth]{extensionpic.png}
 \caption{A series of graphs showing the collisions of two solitons with speed $|v|=2/3$. Subplots (a)-(c) relate to solitons with $\zeta=0.5$ and subplots (d)-(f) relate to solitons with $\zeta=4$. In plots (a) and (d), the solitons are in phase. In plots (b) and (e) they are in antiphase. Plots (c) and (f) show more clearly the difference between in-phase and antiphase collisions.}
 \label{collision}
 \end{figure*}
 
-\begin{figure*}[h]
+\begin{figure*}
 \includegraphics[width=\textwidth]{asymmetrical_collision.png}
 \caption{A series of graphs showing the collisions of two solitons with $\zeta=4$ and speed $|v|=2/3$. In subplot (a), the solitons have a relative phase of $\pi/2$. In plot (b) they have a relative phase of $3\pi/2$. Plot (c) shows the difference between these two cases.}
 \label{asymmetric}
@@ -154,6 +159,17 @@ Two solitons were created at positions symmetric about zero and given equal and 
 \subsection{Repeated Collisions}
 
 
+\subsection{Three Solitons}
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{3solitons-reg.png}
+\caption{Three solitons with equal speeds undergoing collisions with regular (nearly periodic) dynamics. The in-phase and antiphase cases are both shown.}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=\columnwidth]{chaotic.png}
+\caption{Three solitons with speeds 10, $2\pi$ and $3e$ respectively (where $e$ is Euler's number), undergoing collisions with chaotic dynamics.}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -169,10 +185,14 @@ When narrow solitons collide (see Fig.\ref{collision} subplots (d) and (e)), the
 
 \begin{thebibliography}{}
 
-\bibitem{Gross} E. P. Gross (1961), "Structure of a quantised vortex in boson systems", \textit{Il Nuovo Cimento}, \textbf{20}(3) pp. 454-477. 
-\bibitem{Pitaevskii}  L. P. Pitaevskii (1961), "Vortex lines in an imperfect Bose gas", \textit{Sov. Phys. JETP.} \textbf{13}(2) pp. 451–454.
-\bibitem{Bound} N.-C. Panoiu, I. V. Mel’nikov, D. Mihalache, C. Etrich and F. Lederer (1999), "Multiwavelength pulse transmission in an optical fibre - Amplifier system", \textit{Phys. Rev.} \textbf{60}(4868). %cite if bound state mentioned
-\bibitem{Martin} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). %cite if particle model mentioned 
+\bibitem{Gross} E. P. Gross (1961), "Structure of a quantised vortex in boson systems", \textit{Il Nuovo Cimento} 				\textbf{20}(3) pp. 454-477. 
+\bibitem{Pitaevskii}  L. P. Pitaevskii (1961), "Vortex lines in an imperfect Bose gas", \textit{Sov. Phys. JETP.} \textbf{13}(2) 		pp. 451–454.
+\bibitem{Bound} N.-C. Panoiu, I. V. Mel’nikov, D. Mihalache, C. Etrich and F. Lederer (1999), "Multiwavelength pulse 			transmission in an optical fibre - Amplifier system", \textit{Phys. Rev.} \textbf{60}(4868). %bound state
+\bibitem{Martin} A. D. Martin, C. S. Adams and S. A. Gardiner (2008), "Bright Solitary-Matter-Wave Collisions in a Harmonic 		Trap: Regimes of Soliton-like Behaviour", \textit{Physical Review A} \textbf{77}(1). %particle model 
+\bibitem{Transforms} S. Damgaard Hansen, N. Nygaard and K. Mølmer (2012), "Scattering of matter wave solitons on 			localized potentials", arXiv:1210.1681. %transformations of x, t, psi
+\bibitem{Cornish} T. Billam, S. Cornish and S. Gardiner (2010), "Realizing bright matter-wave soliton collisions with 				controlled relative phase", \textit{Physical Review A} \textbf{83}(4). %characteristic soliton lengths 
+\bibitem{ExpParams} S. L. Cornish et al. (2009), "Quantum reflection of bright matter-wave solitons", \textit{Physica D} 			\textbf{15}(238), following JILA soliton experiments. 
+\bibitem{Feshbach} S. Inouye et al. (1998), "Observation of Feshbach resonances in a Bose–Einstein condensate", 				\textit{Nature} \textbf{392} pp. 151-154. 
 
 \end{thebibliography} 
 
@@ -181,5 +201,7 @@ When narrow solitons collide (see Fig.\ref{collision} subplots (d) and (e)), the
 \section{Appendix: Code Fragments} \label{Appendix}
 
 The particle model was implented as follows... [include?]
+
+Listings module not working :( 
 
 \end{document}
