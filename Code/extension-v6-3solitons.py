@@ -50,7 +50,7 @@ def schrodinger_time_evolution(psi_initial, V, g):
 	return psisquareds
 	
 
-def two_particles(start, velocity, spring_constant, mass):
+def particles(start, velocity, spring_constant, mass):
     
     frequency = np.sqrt(spring_constant/mass)
     x = np.zeros(n_times)
@@ -64,9 +64,9 @@ def two_particles(start, velocity, spring_constant, mass):
 #global variables for extent of modelling 
 
 n_points = 4000 #number of x steps 
-n_times = 12000 #number of timesteps
+n_times = 8000 #number of timesteps
 dt = 0.001
-ts = np.linspace(0,12,n_times) 
+ts = np.linspace(0,8,n_times) 
 xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -122,29 +122,66 @@ velocity = 10
 harmPot = schrodinger_time_evolution(three_solitons(-4,0,4,velocity,-velocity,velocity,0,rel_phase1,rel_phase1,family_param), V, g) 
 harmPotPi = schrodinger_time_evolution(three_solitons(-4,0,4,velocity,-velocity,velocity,0,rel_phase2,rel_phase2,family_param), V, g) 
 
-chaos = schrodinger_time_evolution(three_solitons(-4,0,4, -10, 3*np.exp(1), 2*np.pi, 0,rel_phase1,rel_phase1,family_param), V, g)
+chaos = schrodinger_time_evolution(three_solitons(-4,0,4, 8, 3*np.exp(1), 2*np.pi, 0,rel_phase1,rel_phase1,family_param), V, g)
+
+#particles of mass 0.5
+p = particles(-4,velocity*2,K,0.5) #velocity scaling of 1/5 * 10 (10 from time scaling)
+q = particles(0,-velocity*2,K,0.5)
+r = particles(4,velocity*2,K,0.5)
+
+p2 = particles(-4,8*2,K,0.5)
+q2 = particles(0,3*np.exp(1)*2,K,0.5)
+r2 = particles(4,2*np.pi*2,K,0.5)
 
 
 ########## PLOTS ############
-pyplot.figure(figsize=(10,5)) #figsize=(16,5)
+pyplot.figure(figsize=(8,16)) 
 #pyplot.suptitle("g={}".format(g))
 
-pyplot.subplot(121)
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,120), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.subplot(221)
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
 
-pyplot.subplot(122)
-pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,120), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.subplot(222)
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
 pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
 
-pyplot.figure()
-pyplot.imshow(np.transpose(chaos), extent=(-20,20,0,120), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.subplot(223)
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=14)
 pyplot.ylabel("Time", fontsize=14)
+pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
+pyplot.plot(p,ts*10)
+pyplot.plot(q,ts*10)
+pyplot.plot(r,ts*10, 'r-')
+
+pyplot.subplot(224)
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=14)
+pyplot.ylabel("Time", fontsize=14)
+pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
+pyplot.plot(p,ts*10)
+pyplot.plot(q,ts*10)
+pyplot.plot(r,ts*10, 'r-')
+
+pyplot.figure(figsize=(10,8))
+
+pyplot.subplot(121)
+pyplot.imshow(np.transpose(chaos), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=14)
+pyplot.ylabel("Time", fontsize=14)
+
+pyplot.subplot(122)
+pyplot.imshow(np.transpose(chaos), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=14)
+pyplot.ylabel("Time", fontsize=14)
+pyplot.plot(p2,ts*10)
+pyplot.plot(q2,ts*10)
+pyplot.plot(r2,ts*10, 'r-')
 
 #pyplot.savefig('particle.png')
 pyplot.show() 
