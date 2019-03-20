@@ -65,8 +65,8 @@ def particles(start, velocity, spring_constant, mass):
 
 n_points = 4000 #number of x steps 
 n_times = 15000 #number of timesteps
-dt = 0.01
-ts = np.linspace(0,150,n_times) 
+dt = 0.001
+ts = np.linspace(0,15,n_times) 
 xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -125,7 +125,7 @@ harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_
 pyplot.figure(figsize=(5,15)) #figsize=(16,5)
 #pyplot.suptitle("g={}".format(g))
 
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,1500), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,150), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
 pyplot.xlabel("Space", fontsize=12)
 pyplot.ylabel("Time", fontsize=12)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
