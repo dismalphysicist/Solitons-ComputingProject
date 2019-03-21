@@ -136,7 +136,6 @@ r2 = particles(4,2*np.pi*2,K,0.5)
 
 ########## PLOTS ############
 pyplot.figure(figsize=(8,16)) 
-#pyplot.suptitle("g={}".format(g))
 
 pyplot.subplot(221)
 pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,80), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))

@@ -64,9 +64,9 @@ def particles(start, velocity, spring_constant, mass):
 #global variables for extent of modelling 
 
 n_points = 4000 #number of x steps 
-n_times = 15000 #number of timesteps
-dt = 0.001
-ts = np.linspace(0,15,n_times) 
+n_times = 4000 #number of timesteps
+dt = 0.01
+ts = np.linspace(0,40,n_times) 
 xs = np.linspace(-20, 20, n_points)
 L = xs[-1] - xs[0] #box length 
 dx = L/n_points
@@ -120,15 +120,26 @@ q = particles(4,-velocity*2,K,0.5)
 
 
 harmPot = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase1,family_param), V, g) 
+harmPotPi = schrodinger_time_evolution(two_solitons(-4,4,velocity,-velocity,0,rel_phase2,family_param), V, g) 
+
+difference = harmPot - harmPotPi
 
 ########## PLOTS ############
-pyplot.figure(figsize=(5,15)) #figsize=(16,5)
-#pyplot.suptitle("g={}".format(g))
+pyplot.figure(figsize=(8,16)) 
 
-pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,150), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
-pyplot.xlabel("Space", fontsize=12)
-pyplot.ylabel("Time", fontsize=12)
+pyplot.subplot(121)
+pyplot.imshow(np.transpose(harmPot), extent=(-20,20,0,400), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=14)
+pyplot.ylabel("Time", fontsize=14)
 pyplot.title("Relative phase {}".format(rel_phase1), fontsize=16)
+pyplot.plot(p,ts*10)
+pyplot.plot(q,ts*10)
+
+pyplot.subplot(122)
+pyplot.imshow(np.transpose(harmPotPi), extent=(-20,20,0,400), origin='lower', cmap='viridis', norm=colors.SymLogNorm(linthresh=0.3, vmin=harmPot.min(), vmax=harmPot.max()))
+pyplot.xlabel("Space", fontsize=14)
+pyplot.ylabel("Time", fontsize=14)
+pyplot.title("Relative phase " + r'$\pi$', fontsize=16)
 pyplot.plot(p,ts*10)
 pyplot.plot(q,ts*10)
 
